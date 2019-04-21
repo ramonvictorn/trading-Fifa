@@ -1,0 +1,23 @@
+{
+  "name": "trading-fifa",
+  "version": "1.0.0",
+  "description": "platform for view data about player price the fifa game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramonvictorn/trading-Fifa.git"
+  },
+  "author": "Ramon Victor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramonvictorn/trading-Fifa/issues"
+  },
+  "homepage": "https://github.com/ramonvictorn/trading-Fifa#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
