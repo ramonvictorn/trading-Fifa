@@ -7,7 +7,7 @@ Web software to view and compare the price of fifa game player.
 
 ### **Requirements**
 - [Nodejs](https://nodejs.org/ "Nodejs") version 8.10 or >
-- [Npm](https://www.npmjs.com/get-npm "Npm") or [Yarnn](https://yarnpkg.com "Yarnn")
+- [Npm](https://www.npmjs.com/get-npm "Npm") or [Yarn](https://yarnpkg.com "Yarnn")
 
 ### **For run**:
 

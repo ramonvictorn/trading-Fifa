@@ -1,5 +1,5 @@
 /**
- * @author Ramon Victor <ramon.victor@gmail.com>
+ * @author Ramon Victor <ramonvictorn@gmail.com>
  */
 
 //require packages
