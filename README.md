@@ -12,6 +12,7 @@ Web software to view and compare the price of fifa game player.
 ### **For run**:
 
 1. Clone this repository
-1.  (first time) npm install or yarn install to install the dependencies
-2. run de command **npm**/**yarn** **start** to run the software
-3. Go to localhost:8080 to see the page
+2.  (first time) npm install or yarn install to install the dependencies
+3. Run $ sudo npm install webpack-cli -g to install global
+4. Run de command **npm**/**yarn** **start** to run the software
+5. Go to localhost:8080 to see the page
