@@ -13,6 +13,7 @@ const app = express();
 // static files
 app.use('/js', express.static(__dirname + '/web/public/js'));
 app.use('/css', express.static(__dirname + '/web/public/css'));
+app.use('/assets', express.static(__dirname + '/web/public/assets'));
 
 routes.init(app)
 //  Pageview setting
