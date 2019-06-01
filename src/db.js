@@ -46,8 +46,8 @@ function query(query,values, cb){
             }else{
                     console.log('n deu true', err)
                 
-                // pool.end()
-                // throw(new Error(`db.js: unhandled error`));
+                pool.end()
+                throw(new Error(`db.js: unhandled error`));
             }    
         }else{
             cb(err,res)

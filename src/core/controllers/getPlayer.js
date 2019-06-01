@@ -12,10 +12,8 @@ function getPlayer(params,cb){
     }
     getPlayerModels(context,(ret)=>{
         if(ret.err){
-            // res.status(400).send({error:ret.error})
             cb({error:'ERROR_ON_GET_PLAYER'});
         }else{
-            // res.status(200).send({data:ret.data})
             cb({data:ret.data});
         }
     })

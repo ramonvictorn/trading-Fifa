@@ -1,12 +1,20 @@
 config:
   target: 'http://localhost:8080'
+  processor: "./my-functions.js"
   phases:
-    - duration: 10
-      arrivalRate: 10
+    - duration: 40
+      arrivalRate: 15 
   defaults:
     headers:
       x-my-service-auth: '987401838271002188298567'
 scenarios:
   - flow:
+    - function: "generateRandomData"
     - post:
-        url: "/players/getAllPlayers"
+        url: "/players/addPricePlayer"
+        json: 
+          futbinId: "{{ futbinId }}"
+          playerName: "{{ playerName }}"
+          lastPsPrice: "{{lastPsPrice}}"
+          lastXboxPrice : "{{lastXboxPrice}}"
+          lastOriginPrice: "{{lastOriginPrice}}"

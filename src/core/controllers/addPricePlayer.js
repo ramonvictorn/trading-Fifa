@@ -2,6 +2,7 @@ const addPricePlayerModel = require('../models/addPricePlayer.js')
 const timeGMT = require('../../libs/timeGMT.js')
 
 function addPricePlayer(params,cb){
+    // console.log("testParams addPricePlayer ", params.idPlatform)
     let dateGMT = new timeGMT();
     if(!checkParams(params)){
         cb({error:"INVALID_PARAMS"})
@@ -16,7 +17,7 @@ function addPricePlayer(params,cb){
         minutes:dateGMT.getMinutes(),
         details: params.details || {},
         category: params.category || 'pattern',
-        id_platform : params.id_platform,
+        id_platform : params.idPlatform,
         price: parseInt(params.price),
     }
     
@@ -36,8 +37,12 @@ function addPricePlayer(params,cb){
  * @param {object} params - Params to verify
  */
 function checkParams(params){
-    // if(params.futbinId == undefined || params.lastPSPrice == undefined) return false;
-    // if(params.lastXboxPrice == undefined || params.lastOriginPrice == undefined) return false;
+    if(params.idPlayer == undefined){
+        return false;
+    } 
+    if(params.price == undefined){
+        return false;
+    }
     return true;
 }
 

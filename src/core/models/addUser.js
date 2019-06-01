@@ -1,31 +1,32 @@
 const db = require('../../db.js')
-
-const getPlayerModel = require('./getPlayer.js')
-module.exports = addPlayer;
-function addPlayer(context,cb){
+const crypto = require('crypto');
+module.exports = addUser;
+function addUser(context,cb){
     let queryInsert = ``;
     let queryValues = [
-        context.idFutbin,
         context.name,
+        context.login,
         context.details,
-        context.category,
     ];
-   
-    let queryString = `INSERT INTO players 
-        (id_futbin,name,details,category,date_inserted) 
-    VALUES 
-        ($1,$2, $3,$4,now())
-    RETURNING 
-        id_futbin as "idFutbin",
-        id_player as "idPlayer",
+
+    const hasher = crypto.createHash('SHA256');
+    hasher.update(context.password);
+    const enteredHash = hasher.digest('hex');
+    queryValues.push(enteredHash);
+
+    let queryString = `INSERT INTO users
+            (name,login,password,details,date_inserted) 
+        VALUES
+            ($1,$2,$4,$3, now())
+        RETURNING 
+        id_user as "idUSer",
         name,
         details,
-        category,
-        extract(epoch from date_inserted)*1000 as "dateInserted" ;`
+        date_inserted as "dateInserted";`
 
     db.query(queryString, queryValues, (err,res)=>{   
         if(err){
-            cb({error:'ERROR_ON_ADD_PLAYER'})
+            cb({error:'ERROR_ON_ADD_USER'})
         }else{
             cb({data:res.rows[0]})
         }
