@@ -17,6 +17,7 @@ function verifyPlayers(req,res){
         res.status(400).send({error:"INVALID_PARAMS"});
         return;
     }
+    
     let needUpdate = [];
     let dataPlayer = {};
     let context = {
@@ -30,6 +31,13 @@ function verifyPlayers(req,res){
             ['ps4'] : parseInt(req.body.lastPsPrice),
             ['origin'] : parseInt(req.body.lastOriginPrice),
         }
+    };
+    let contextBody = {
+        name: req.body.playerName,
+        idFutbin : parseInt(req.body.futbinId),
+        ['xbox'] : parseInt(req.body.lastXboxPrice),
+        ['ps4'] : parseInt(req.body.lastPsPrice),
+        ['origin'] : parseInt(req.body.lastOriginPrice),
     };
     if(players[context.idFutbin] == true && pricePlayers[context.idFutbin] != undefined){
         // test xbox
@@ -54,7 +62,7 @@ function verifyPlayers(req,res){
             })
         }else{
             console.log('Valores iguais')
-            done('Valores Iguais - code 3')
+            done(200,'Valores Iguais - code 3')
         }
     }else{
         getPlayerController(context,(ret)=>{
@@ -96,45 +104,58 @@ function verifyPlayers(req,res){
      */
     function savesOnDataBase(platforms,context,cb){
         let dones = 0;
-        getPlayerController(context,(ret)=>{
-            context.idPlayer = ret.data[0].idPlayer;
-
+        getPlayerController({idFutbin:contextBody.idFutbin},(ret)=>{
+            contextBody.idPlayer = ret.data[0].idPlayer;
             for(let a = 0; a < platforms.length; a++){
                 getPlatformController({name:platforms[a].platform},(ret)=>{
                     if(!ret.error){
                         let newObject = {
                             idPlatform : ret.data[0].idPlatform,
-                            price: ret.data[0].name == 'xbox' ? context.xboxPrice : (ret.data[0].name == 'ps4' ? context.ps4Price : context.originPrice ),
+                            price:contextBody[ret.data[0].name],
                         }
-                        context.price = ret.data[0].name == 'xbox' ? context.xboxPrice : (ret.data[0].name == 'ps4' ? context.ps4Price : context.originPrice );
-                        getLastPlatformPriceModels({...context, idPlatform:ret.data[0].idPlatform, price:newObject.price},(retu)=>{
-                            if(retu.data){
-                                if(retu.data.price != context.toUpdate[retu.data.name]){
-                                    addPricePlayerController({...context, idPlatform: ret.data[0].idPlatform,price:context.toUpdate[ret.data[0].name]}, (ret)=>{
+
+                        getLastPlatformPriceModels({...contextBody, idPlatform: newObject.idPlatform, price:newObject.price, namePlatform: ret.data[0].name},(retu)=>{
+                            if(!retu.error){
+                                if(retu.data && retu.data.price){
+                                    if(retu.data.price != contextBody[retu.data.name]){
+                                        let newAddPriceDifferent = {
+                                            ...contextBody,
+                                            price: contextBody[retu.data.name],
+                                            idPlatform: retu.data.idPlatform,
+                                        }
+                                            addPricePlayerController(newAddPriceDifferent, (ret)=>{
+                                                    dones+=1;
+                                                    if(dones == platforms.length){
+                                                        done(200,'alterados -code -4')
+                                                    }
+                                            })
+                                        }else{
+                                            //price equals
+                                            dones+=1;
+                                            if(dones == platforms.length){
+                                                done(200,'done - code -5')
+                                            }
+                                        }
+                                }else{
+                                    let newAddPrice = {
+                                        ...contextBody,
+                                        price: retu.paramSend.price,
+                                        idPlatform: retu.paramSend.idPlatform,
+                                    }
+                                    addPricePlayerController(newAddPrice, (ret)=>{
                                         dones+=1;
                                         if(dones == platforms.length){
-                                            // cb()
-                                            done('alterados -code -4')
+                                            done(200,'alterados -code -6')
                                         }
                                     })
-                                }else{
-                                    dones+=1;
-                                    // cb()
-                                    if(dones == platforms.length){
-                                        done('NOT_MODIFIQUED - 1')
-                                    }
                                 }
+            
                             }else{
-                                console.log('NAO TEVE DATA NO LAST')
-                                addPricePlayerController({...context,idPlatform:retu.idPlatform,price:retu.price}, (ret)=>{
-                                    dones+=1;
-                                    if(dones == platforms.length){
-                                        // cb()
-                                        done('dados alterados- code 2')
-                                    }
-                                })
+                                done(400,"ERRO_ON_GET_LAS_PRICE_PLATFORM")
                             }
                         })
+                    }else{
+                        done(400,"ERRO_ON_GET_PLATFORM")
                     }
                 })
             }   
@@ -144,9 +165,13 @@ function verifyPlayers(req,res){
         })
     }
 
-    function done(action){
-        res.status(200).send({data:action})
-        console.log("done aqui", action)
+    function done(code,text){
+        if(code == 400){
+            console.log('ERROR   -> ', text)
+            res.status(code).send({error:text})
+        }else{
+            res.status(code).send({data:text})
+        }
     }   
 }
 
@@ -156,11 +181,6 @@ function verifyPlayers(req,res){
  * @returns false if requisition is not ok 
  */
 function checkParams(params){
-    // if(params.futbinId == undefined) return false;
-    // if(params.lastXboxPrice  == undefined) return false;
-    // if(params.lastOriginPrice  == undefined) return false;
-    // if(params.lastPSPrice  == undefined) return false;
-    // version old
     if(isNaN(params.futbinId)|| params.futbinId == 0) return false;
     if( isNaN(params.lastXboxPrice)) return false;
     if( isNaN(params.lastOriginPrice)) return false;

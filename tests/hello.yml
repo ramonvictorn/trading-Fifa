@@ -2,8 +2,8 @@ config:
   target: 'http://localhost:8080'
   processor: "./my-functions.js"
   phases:
-    - duration: 40
-      arrivalRate: 15 
+    - duration: 10
+      arrivalRate: 5 
   defaults:
     headers:
       x-my-service-auth: '987401838271002188298567'

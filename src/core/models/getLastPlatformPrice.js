@@ -34,9 +34,11 @@ const db = require('../../db.js')
             }else{
                 if(!res.rows.length){
                     cb({
-                        idPlatform: context.idPlatform,
-                        price: context.price,
-                    })
+                            paramSend:{
+                                idPlatform: context.idPlatform,
+                                price: context.price,
+                            }
+                        })
                 }else{
                     cb({data:res.rows[0]})
                 }

@@ -26,9 +26,11 @@ Web software to view and compare the price of fifa game player.
 
 4. Run ***npm run build-prod*** to build code
 
-5. Run de command **npm**/**yarn**  **start** to run the software
+5.It is necessary to configure the database with username and password in the configuration file and execute the command npm run restoreDb
 
-6. Go to **localhost:8080** to see the page
+6. Run de command **npm**/**yarn**  **start** to run the software
+
+7. Go to **localhost:8080** to see the page
 
 ## For development
 
@@ -38,9 +40,6 @@ Web software to view and compare the price of fifa game player.
 
 
 
-
-
- arrumar
 
 ##ROUTES
 
