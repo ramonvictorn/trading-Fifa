@@ -9,10 +9,10 @@ let pool;
 function initDb(cb){
     console.log('db.js - initDb Connectin with databases..')
     pool = new Pool({
-        user: 'ramon',
+        user: 'postgres',
         host: 'localhost',
         database: 'fifa-trading',
-        password: 'Lantec2019',
+        password: '4415253',
         port: 5432,
     })
     
