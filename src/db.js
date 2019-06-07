@@ -1,6 +1,6 @@
 
 const { Pool, Client } = require('pg')
-        
+const settings = require('./settings.js').settings;
 let pool; 
 /**
  * @function initDb
@@ -9,18 +9,11 @@ let pool;
 function initDb(cb){
     console.log('db.js - initDb Connectin with databases..')
     pool = new Pool({
-<<<<<<< HEAD
-        user: 'fifatrade',  
-        host: 'localhost',
-        database: 'fifa-trading',
-        password: 'fifatradepassword',
-=======
-        user: 'postgres',
-        host: 'localhost',
-        database: 'fifa-trading',
-        password: '4415253',
->>>>>>> 4f3be03dec985eca730c01687f5d58075c51d01c
-        port: 5432,
+        user: settings.DB_USER,  
+        host: settings.DB_HOST,
+        database: settings.DB_DATABASE,
+        password: settings.DB_PASSWORD,
+        port: settings.DB_PORT,
     })
     
     pool.connect((err, client, done) => {

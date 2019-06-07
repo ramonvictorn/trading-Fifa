@@ -23,6 +23,6 @@ function init(app){
     // app.post('/players/addPlayer', addPlayerController);
     app.post('/players/addPricePlayer', verifyPlayers);
     app.post('/users/addUser', addUserController);
-    app.post('/users/login', loginController );
+    app.post('/login', loginController );
 
 }

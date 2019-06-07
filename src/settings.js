@@ -1,7 +1,9 @@
 // const DB_USER  = 'fifatradeapi'
 // const DB_PASSWORD = 'fifapasswordapi'
-
-const DB_USER  = 'fifatrade'
-const DB_PASSWORD = 'fifatradepassword'
-const DATABASE = 'fifa-trading'
-const PORT = 0000
+module.exports.settings = {
+    DB_HOST : 'localhost',
+    DB_USER  : 'fifatrade',
+    DB_PASSWORD : 'fifatradepassword',
+    DB_DATABASE :'fifa-trading',
+    DB_PORT : 5432,
+};

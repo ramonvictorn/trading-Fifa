@@ -6,7 +6,8 @@
 const express = require('express');
 const path = require('path');
 var bodyParser = require('body-parser')
-
+const session = require('express-session');
+var FileStore = require('session-file-store')(session);
 const routes = require('./core/routes.js');
 const db = require('./db.js');
 const app = express();
@@ -20,18 +21,30 @@ app.use('/assets', express.static(__dirname + '/web/public/assets'));
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+//sessions
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    store: new FileStore('../session'),
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false ,
+        maxAge  : 60000, //1 minuto
+    },
+}))
 
-routes.init(app)
-//  Pageview setting
-app.get('*', (req,res) =>{res.sendFile(path.resolve('./src/web/public/view/index.html'))});
-
-app.use(function (req, res, next) {
+app.use(function (req, res, next) { 
     console.log('Request:', req.method, req.originalUrl);
     console.log('Body:', req.body, req.originalUrl);
     next();
 });
+//  Pageview setting
+app.get('*', (req,res) =>{res.sendFile(path.resolve('./src/web/public/view/index.html'))});
+routes.init(app)
+
 db.initDb(
-     () => {
+    () => {
         app.listen(8080,(req,res)=>{
             console.log('Running on port 8080')
         }

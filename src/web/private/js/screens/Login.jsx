@@ -10,7 +10,7 @@ class Login extends Component{
     render(){
         return(
             <React.Fragment>
-                <div class="general-login">
+                <div className="general-login">
                     <FormLogin></FormLogin>
                 </div>
             </React.Fragment>

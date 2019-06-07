@@ -2,7 +2,7 @@ const loginModels = require('../models/login.js');
 
 function login(req,res){
     if(!checkParams(req.body)){
-        res.status(200).send({error:"INVALID_PARAMS"})
+        res.status(400).send({error:"INVALID_PARAMS"})
         return
     }
 
@@ -14,6 +14,7 @@ function login(req,res){
         if(ret.error){
             res.status(400).send({error:ret.error})
         }else{
+            req.session.user = {...ret.data}
             res.status(200).send({data:ret.data})
         }
     })
