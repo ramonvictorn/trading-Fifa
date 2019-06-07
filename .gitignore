@@ -1,2 +1,3 @@
 node_modules
 ./src/web/public/js/index.js
+./session
