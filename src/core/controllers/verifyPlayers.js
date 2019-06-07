@@ -66,7 +66,7 @@ function verifyPlayers(req,res){
         }
     }else{
         getPlayerController(context,(ret)=>{
-            if(ret.data.length >= 1){
+            if(ret.data && ret.data.length >= 1){
                 players[context.idFutbin] = true;
                 pricePlayers[context.idFutbin] = {}; 
                 needUpdate.push({ platform: 'xbox', price:context.xboxPrice})
