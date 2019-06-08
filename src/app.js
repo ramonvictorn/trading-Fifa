@@ -11,7 +11,7 @@ var FileStore = require('session-file-store')(session);
 const routes = require('./core/routes.js');
 const db = require('./db.js');
 const app = express();
-
+const settings = require('./settings').settings;
 // static files
 app.use('/js', express.static(__dirname + '/web/public/js'));
 app.use('/css', express.static(__dirname + '/web/public/css'));
@@ -45,8 +45,8 @@ routes.init(app)
 
 db.initDb(
     () => {
-        app.listen(8080,(req,res)=>{
-            console.log('Running on port 8080')
+        app.listen(settings.APP_PORT,(req,res)=>{
+            console.log(`Running on port ${settings.APP_PORT}`)
         }
     )
 
