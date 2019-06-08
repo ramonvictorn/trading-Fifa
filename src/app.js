@@ -45,8 +45,8 @@ routes.init(app)
 
 db.initDb(
     () => {
-        app.listen(settings.APP_PORT,(req,res)=>{
-            console.log(`Running on port ${settings.APP_PORT}`)
+        app.listen(process.env.PORT,(req,res)=>{
+            console.log(`Running on port ${process.env.PORT}`)
         }
     )
 
