@@ -37,9 +37,8 @@
     "session-file-store": "^1.2.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.0",
-    "webpack-cli": "^3.3.1"
-  },
-  "devDependencies": {
+    "webpack-cli": "^3.3.1",
     "pg": "^7.10.0"
   }
+  
 }
