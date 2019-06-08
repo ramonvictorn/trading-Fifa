@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "build-dev": "webpack --mode development --watch ",
+    "build-prod": "webpack --mode production",
     "restoreDb": "./tests/restoreDb.sh",
-    "herokuBuild": "npm install && npm run build-dev && npm run start"
+    "herokuBuild": "npm install && npm run build-prod & npm run start"
   },
   "repository": {
     "type": "git",
