@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-
-
+import {
+    BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Redirect
+} from 'react-router-dom';
 class FormLogin extends Component{
-    constructor(){
+    constructor({history}){
         super()
         this.login =this.login.bind(this);
         this.updateStateLogin = this.updateStateLogin.bind(this);
@@ -11,6 +15,7 @@ class FormLogin extends Component{
             login : '',
             password : '',
         }
+        this.oi = true;
     }
     updateStateLogin(event){
         this.setState({
@@ -31,10 +36,21 @@ class FormLogin extends Component{
             type: "POST",
             url: '/login',
             data: data,
-            dataType:   'JSON'
+            dataType:   'JSON',
+            complete:(ret)=>{
+                console.log('complet')
+                // this.redirect();
+                
+            }
           });
     }
     render(){
+        
+        // console.log("render formLogin ", this.props, 'history -> ', history);
+        // if (this.oi) {
+        //     this.oi = false;
+        //     return <Redirect to="/wallet" />
+        // }
         return(
             <React.Fragment>
                 <div className="form">

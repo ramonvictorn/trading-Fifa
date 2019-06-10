@@ -8,6 +8,7 @@ import {
 
 // views
 import LoginView from '../js/screens/Login.jsx'
+import WalletView from '../js/screens/Wallet.jsx';
 
 
 
@@ -25,6 +26,7 @@ class AppRoutes extends Component{
         return(
             <Router>    
                 <Switch>
+                    <Route path='/wallet' component={WalletView} history={history}/>
                     <Route path='/' component={LoginView}/>
                 </Switch>
             </Router>
