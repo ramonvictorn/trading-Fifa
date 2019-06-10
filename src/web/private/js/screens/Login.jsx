@@ -8,11 +8,10 @@ class Login extends Component{
     }
     
     render(){
-        console.log("render Login view",history.ps ) 
+        
         return(
             <React.Fragment>
                 <div className="general-login">
-                    <button onClick={()=>{this.props.history.push("/ramon");}}>teste</button>
                     <FormLogin></FormLogin>
                 </div>
             </React.Fragment>
