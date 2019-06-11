@@ -10,7 +10,7 @@ const addPlayerController = require('./controllers/addPlayer.js');
 const addPricePlayerController = require('./controllers/addPricePlayer.js')
 const addUserController = require('./controllers/addUser.js');
 const loginController = require('./controllers/login.js')
-
+const isLoggedController = require('./controllers/isLogged.js');
 let contador = 1
 function init(app){
     app.get('/ping', (req,res)=>{
@@ -24,5 +24,6 @@ function init(app){
     app.post('/players/addPricePlayer', verifyPlayers);
     app.post('/users/addUser', addUserController);
     app.post('/login', loginController );
+    app.post('/users/isLogged', isLoggedController);
 
 }
