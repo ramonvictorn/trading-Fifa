@@ -1,4 +1,5 @@
-html, body {
+html, 
+body {
     height: 100%;
     width: 100%;
     position: relative;
@@ -73,7 +74,9 @@ h1 {
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.form button:hover,
+.form button:active,
+.form button:focus {
   background: #35a8c9;
 }
 .form .message {
@@ -88,4 +91,5 @@ h1 {
 .form .register-form {
   display: none;
 }
+
 

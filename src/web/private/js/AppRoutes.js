@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'; 
 
 // views
-import LoginView from '../js/screens/Login.jsx'
+import LoginView from '../js/screens/Login.jsx';
 import WalletView from '../js/screens/Wallet.jsx';
 import MarketView from '../js/screens/Market.jsx';
 
