@@ -43,13 +43,16 @@ CREATE table prices (
 
 CREATE TABLE users (
     id_user serial NOT NULL,
-   	"name" text NOT NULL,
+   	name text NOT NULL,
    	login text NOT NULL,
    	password text NULL,
     details jsonb NULL,
     date_inserted timestamptz NOT null,
     CONSTRAINT users_pk PRIMARY KEY (id_user))WITH (OIDS=FALSE) ;
-   
+select * from users;
+INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Ramon Victor', 'ramon.victor','cb7fcdd51aa0623013ed7ac3b666672b100ac08de7d0de22e88a0210eea9fae9', '{}', now());   
+INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Caetano Sasia', 'caetano.sasia','f49de99820177aab9480f60cf90b137a3cf23474d3a191c8921041f9559e893a', '{}', now());   
+
 CREATE TABLE users_players (
     id_buy serial NOT NULL,
     id_user int NOT NULL,
@@ -63,6 +66,24 @@ CREATE TABLE users_players (
     constraint users_players_id_platform foreign key (id_platform) REFERENCES platforms (id_platform),
     CONSTRAINT buy_pk PRIMARY KEY (id_buy))WITH (OIDS=FALSE) ;
 
+   --SELECT * FROM analyzed
+   create table analyzed (
+   	id_player int not NULL,
+   	id_platform int NOT NULL,
+   	lower_price int not null,
+   	higher_price int not null,
+   	lower_price_last_day int not null,
+   	higher_price_last_day int not null,
+   	variation_price int not null,
+   	day int not null,
+	month int not null,
+	year int not null,
+   	date_inserted timestamptz NOT null,
+   	constraint analyzed_id_player foreign key (id_player) REFERENCES players (id_player),
+   	constraint analyzed_id_platform foreign key (id_platform) REFERENCES platforms (id_platform)
+   	) WITH (OIDS=FALSE);
+   	
+   	
 
 --insert into users (name,login,password,details,date_inserted) values ('Ramon Victor','ramon.victor','ramon','{}', now())Player",
 --insert into users (name,login,password,details,date_inserted) values ('Ramon','ramon','ramon','{}', now())

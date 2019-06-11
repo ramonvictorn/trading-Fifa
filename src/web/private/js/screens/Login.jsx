@@ -3,12 +3,12 @@ import React, {Component} from 'react';
 import FormLogin from '../components/FormLogin.jsx';
 
 class Login extends Component{
-    constructor({history}){
+    constructor(){
         super();
     }
     
+    
     render(){
-        
         return(
             <React.Fragment>
                 <div className="general-login">

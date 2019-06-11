@@ -11,9 +11,11 @@ function login(req,res){
         password:req.body.password,
     }
     loginModels(context,(ret)=>{
+        console.log('oi cb ', ret)
         if(ret.error){
             res.status(400).send({error:ret.error})
         }else{
+            console.log('elsee', ret)
             req.session.user = {...ret.data}
             res.status(200).send({data:ret.data})
         }
