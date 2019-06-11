@@ -7,8 +7,9 @@ import {
 } from 'react-router-dom'; 
 
 // views
-import LoginView from '../js/screens/Login.jsx'
+import LoginView from '../js/screens/Login.jsx';
 import WalletView from '../js/screens/Wallet.jsx';
+import HomeView from '../js/screens/Home.jsx';
 
 
 
@@ -27,6 +28,7 @@ class AppRoutes extends Component{
             <Router>    
                 <Switch>
                     <Route path='/wallet' component={WalletView} history={history}/>
+                    <Route path='/home' component={HomeView} history={history}/>
                     <Route path='/' component={LoginView}/>
                 </Switch>
             </Router>
