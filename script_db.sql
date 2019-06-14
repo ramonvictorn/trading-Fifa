@@ -65,16 +65,17 @@ CREATE TABLE users_players (
     constraint users_players_id_player foreign key (id_player) REFERENCES players (id_player),
     constraint users_players_id_platform foreign key (id_platform) REFERENCES platforms (id_platform),
     CONSTRAINT buy_pk PRIMARY KEY (id_buy))WITH (OIDS=FALSE) ;
-
+   
+--select * from analyzed where id_platform = 1 and day = 12 and "month" = 6 and "year" = 2019
+-- INSERT INTO analyzed (id_player, id_platform,) VALUES ();
    --SELECT * FROM analyzed
    create table analyzed (
    	id_player int not NULL,
    	id_platform int NOT NULL,
-   	lower_price int not null,
-   	higher_price int not null,
    	lower_price_last_day int not null,
    	higher_price_last_day int not null,
-   	variation_price int not null,
+   	variation_low_price int not null,
+   	variation_high_price int not null,
    	day int not null,
 	month int not null,
 	year int not null,

@@ -3,6 +3,8 @@ const addPlayerController = require('../controllers/addPlayer.js');
 const getPlayerController = require('../controllers/getPlayer.js');
 const addPricePlayerController = require('../controllers/addPricePlayer.js')
 const getPlatformController = require('../controllers/getPlatform.js')
+
+const priceAnalysisControler = require('../controllers/priceAnalysis.js');
 //models
 const getLastPlatformPriceModels = require('../models/getLastPlatformPrice.js');
 
@@ -124,6 +126,10 @@ function verifyPlayers(req,res){
                                             idPlatform: retu.data.idPlatform,
                                         }
                                             addPricePlayerController(newAddPriceDifferent, (ret)=>{
+                                                    console.log('adding1');
+                                                    priceAnalysisControler(newAddPriceDifferent,(ret)=>{
+
+                                                    })
                                                     dones+=1;
                                                     if(dones == platforms.length){
                                                         done(200,'alterados -code -4')
@@ -143,6 +149,10 @@ function verifyPlayers(req,res){
                                         idPlatform: retu.paramSend.idPlatform,
                                     }
                                     addPricePlayerController(newAddPrice, (ret)=>{
+                                        console.log('adding2');
+                                        priceAnalysisControler(newAddPrice,(ret)=>{
+                                                        
+                                        })
                                         dones+=1;
                                         if(dones == platforms.length){
                                             done(200,'alterados -code -6')
