@@ -1,14 +1,12 @@
 const db = require('../../db.js')
-
-const getPlayerModel = require('./getPlayer.js')
 module.exports = addPlayer;
 function addPlayer(context,cb){
     let queryInsert = ``;
     let queryValues = [
-        context.idFutbin,
-        context.name,
-        context.details,
-        context.category,
+        context.futbinId,
+        context.playerName,
+        context.details || {},
+        context.category || 'pattern',
     ];
    
     let queryString = `INSERT INTO players 

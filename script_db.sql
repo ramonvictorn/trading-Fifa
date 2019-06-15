@@ -84,7 +84,6 @@ CREATE TABLE users_players (
    	constraint analyzed_id_platform foreign key (id_platform) REFERENCES platforms (id_platform)
    	) WITH (OIDS=FALSE);
    	
-   	
 
 --insert into users (name,login,password,details,date_inserted) values ('Ramon Victor','ramon.victor','ramon','{}', now())Player",
 --insert into users (name,login,password,details,date_inserted) values ('Ramon','ramon','ramon','{}', now())

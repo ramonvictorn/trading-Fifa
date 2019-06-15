@@ -3,18 +3,18 @@ config:
   processor: "./my-functions.js"
   phases:
     - duration: 60
-      arrivalRate: 50
+      arrivalRate: 350
   defaults:
-    headers:  
+    headers:
       x-my-service-auth: '987401838271002188298567'
-scenarios:  
+scenarios:
   - flow:
     - function: "generateRandomData"
     - post:
         url: "/players/addPricePlayer"
         json: 
-          futbinId: "{{ futbinId }}"
-          playerName: "{{ playerName }}"
-          lastPsPrice: "{{lastPsPrice}}"
-          lastXboxPrice : "{{lastXboxPrice}}"
-          lastOriginPrice: "{{lastOriginPrice}}"
+          futbinId: "67"
+          playerName: "Ramon"
+          lastPsPrice: "12"
+          lastXboxPrice : "3232"
+          lastOriginPrice: "45454"

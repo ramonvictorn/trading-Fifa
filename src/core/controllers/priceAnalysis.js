@@ -1,29 +1,22 @@
-const priceAnalysisModels = require('../models/priceAnalysis.js');
-function priceAnalysis(params,cb){
-    if(!checkParams(params)){
-        cb({error:"INVALID_PARAMS"})
-        return
-    }
+// ver se já tem 1 linha lá
 
-    let context = {
-        idPlayer: params.idPlayer,
-        idPlatform : params.idPlatform,
-        price: params.price,
-        
-    }
-    priceAnalysisModels(context, (ret)=>{
-        console.log('priceAnalysisModels Cb')
-    })
-    
-}
 
-/**
- * @returns Returns false if params aren't correct
- * @param {object} params - Params to verify
- */
-function checkParams(params){
-    console.log('priceAnalysis params ->', params)
-    return true;
-}
+// pegar o preço mais baixo daquele dia
 
+// pegar o preço mais alto
+
+// calcular as porcentagens
+
+
+// inserir ou dar update
+
+const priceAnalysisModel = require('../models/priceAnalysis.js');
 module.exports = priceAnalysis;
+function priceAnalysis(params,cb){
+    let context = {
+        idPlayer: params.idPlayer
+    }
+    // for(var cont = 0 ; cont < pric)
+
+
+}

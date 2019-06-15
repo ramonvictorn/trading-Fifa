@@ -37,9 +37,10 @@ app.use(session({
     },
 }))
 
+
 app.use(function (req, res, next) { 
     console.log('Request:', req.method, req.originalUrl);
-    console.log('Body:', req.body, req.originalUrl);
+    // console.log('Body:', req.body, req.originalUrl);
     next();
 });
 

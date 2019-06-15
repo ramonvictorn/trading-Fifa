@@ -9,7 +9,7 @@ function addPricePlayer(context,cb){
         context.year,
         context.hour,
         context.minutes,
-        context.id_platform,
+        context.idPlatform,
         context.price,
     ]
 
@@ -20,14 +20,14 @@ function addPricePlayer(context,cb){
     RETURNING
         id_player as "idPlayer",
         price,
-        id_platform;`
+        id_platform as "idPlatform";`
 
     db.query(queryInsert, queryValues,(err,res)=>{   
         if(err){
             console.log('ERROR_ON_ADD_PRICE_PLAYER ', JSON.stringify(err, null,{}))
             cb({error:'ERROR_ON_ADD_PRICE_PLAYER'})
         }else{
-            cb({data:res.rows})
+            cb({data:res.rows[0]})
         }
         
     })
