@@ -2,11 +2,17 @@ const addPricePlayerModel = require('../models/addPricePlayer.js');
 const GMTdate = require('../../libs/timeGMT.js');
 const logger = require('../../libs/logger.js');
 const getLastPlatformPriceModel = require('../models/getLastPlatformPrice.js');
+const priceAnalysisController = require('../controllers/priceAnalysis.js');
 let pricesPlayers = {};
 let contador = 1;
 module.exports  = verifyPrice;
 function verifyPrice(req,res){
     function done(code,msg){
+        if(needUpdate.length != 0){
+            for(var contFor = 0; contFor < needUpdate.length; contFor++){
+                priceAnalysisController(needUpdate[contFor]);
+            }
+        }
         if(code == 400){
             res.status(code).json({error:msg});
             return;
@@ -21,18 +27,19 @@ function verifyPrice(req,res){
 
     if(pricesPlayers[req.body.futbinId] != undefined){
 
-        if(pricesPlayers[req.body.futbinId]['lastXboxPrice'] =! req.body.lastXboxPrice){
+        if(pricesPlayers[req.body.futbinId]['lastXboxPrice'] != req.body.lastXboxPrice){
             needUpdate.push({price:req.body.lastXboxPrice, idPlatform: 1, idPlayer: req.body.idPlayer})
         }
-        if(pricesPlayers[req.body.futbinId]['lastPsPrice'] =! req.body.lastPsPrice){
+        if(pricesPlayers[req.body.futbinId]['lastPsPrice'] != req.body.lastPsPrice){
             needUpdate.push({price:req.body.lastPsPrice, idPlatform: 2,idPlayer: req.body.idPlayer})
         }
-        if(pricesPlayers[req.body.futbinId]['lastOriginPrice'] =! req.body.lastOriginPrice){
+        if(pricesPlayers[req.body.futbinId]['lastOriginPrice'] != req.body.lastOriginPrice){
             needUpdate.push({price:req.body.lastOriginPrice, idPlatform: 3, idPlayer: req.body.idPlayer})
         }   
 
         update();
     }else{
+        pricesPlayers[req.body.futbinId] = {};
         getLastPlatformPriceModel({idPlatform: 1, idPlayer:req.body.idPlayer},(dataReturned)=>{
             // console.log('getLastPlatformPriceModel ', dataReturned)
             if(!dataReturned.data ||  dataReturned.data.price != req.body.lastXboxPrice){
@@ -47,7 +54,7 @@ function verifyPrice(req,res){
         getLastPlatformPriceModel({idPlatform: 2, idPlayer:req.body.idPlayer},(dataReturned)=>{
             // console.log('getLastPlatformPriceModel ', dataReturned)
             if(!dataReturned.data ||  dataReturned.data.price != req.body.lastPsPrice){
-                needUpdate.push({price:req.body.lastPsPrice, idPlatform: 2,idPlayer: req.body.idPlayer})
+                needUpdate.push({price:req.body.lastPsPrice, idPlatform: 2,idPlayer: req.body.idPlayer}) 
             }
             donesLastPrice++;
             if(donesLastPrice == 3){
@@ -58,7 +65,7 @@ function verifyPrice(req,res){
         getLastPlatformPriceModel({idPlatform: 3, idPlayer:req.body.idPlayer},(dataReturned)=>{
             // console.log('getLastPlatformPriceModel ', dataReturned)
             if(!dataReturned.data ||  dataReturned.data.price != req.body.lastOriginPrice){
-                needUpdate.push({price:req.body.lastOriginPrice, idPlatform: 3,idPlayer: req.body.idPlayer})
+                needUpdate.push({price:req.body.lastOriginPrice, idPlatform: 3,idPlayer: req.body.idPlayer});
             }
             donesLastPrice++;
             if(donesLastPrice == 3){
@@ -97,7 +104,6 @@ function verifyPrice(req,res){
                     idPlayer : req.body.idPlayer,
                 },(dataReturned)=>{
                     cbs++;
-                    pricesPlayers[req.body.futbinId] = {};
                     if(dataReturned.data.idPlatform == 1){
                         //xbox
                         pricesPlayers[req.body.futbinId]['lastXboxPrice'] =dataReturned.data.price; 
@@ -112,7 +118,7 @@ function verifyPrice(req,res){
                     }
                     if(needUpdate.length == cbs){
                         logger.log('res.send 2');
-                        done(200,'SUCESS');
+                        done(200,`SUCESS ${needUpdate.length}`);
                     }
                 })
             }

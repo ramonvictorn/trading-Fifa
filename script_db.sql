@@ -72,6 +72,7 @@ CREATE TABLE users_players (
    create table analyzed (
    	id_player int not NULL,
    	id_platform int NOT NULL,
+   	last_price int not null,
    	lower_price_last_day int not null,
    	higher_price_last_day int not null,
    	variation_low_price int not null,
@@ -84,6 +85,8 @@ CREATE TABLE users_players (
    	constraint analyzed_id_platform foreign key (id_platform) REFERENCES platforms (id_platform)
    	) WITH (OIDS=FALSE);
    	
+   
+
 
 --insert into users (name,login,password,details,date_inserted) values ('Ramon Victor','ramon.victor','ramon','{}', now())Player",
 --insert into users (name,login,password,details,date_inserted) values ('Ramon','ramon','ramon','{}', now())
