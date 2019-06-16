@@ -87,7 +87,9 @@ CREATE TABLE users_players (
    	
    
 
-
+--BEGIN transaction
+--commit transaction
+--SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 --insert into users (name,login,password,details,date_inserted) values ('Ramon Victor','ramon.victor','ramon','{}', now())Player",
 --insert into users (name,login,password,details,date_inserted) values ('Ramon','ramon','ramon','{}', now())
 --insert into users (name,login,password,details,date_inserted) values ('Ramon','ramon','ramon','{}', now())

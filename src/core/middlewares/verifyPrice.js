@@ -41,7 +41,8 @@ function verifyPrice(req,res){
     }else{
         pricesPlayers[req.body.futbinId] = {};
         getLastPlatformPriceModel({idPlatform: 1, idPlayer:req.body.idPlayer},(dataReturned)=>{
-            // console.log('getLastPlatformPriceModel ', dataReturned)
+            // console.log('getLastPlatformPriceModel ', dataReturned);
+            pricesPlayers[req.body.futbinId]['lastXboxPrice'] =dataReturned.data.price; 
             if(!dataReturned.data ||  dataReturned.data.price != req.body.lastXboxPrice){
                 needUpdate.push({price:req.body.lastXboxPrice, idPlatform: 1,idPlayer: req.body.idPlayer})
             }
@@ -53,6 +54,7 @@ function verifyPrice(req,res){
         })
         getLastPlatformPriceModel({idPlatform: 2, idPlayer:req.body.idPlayer},(dataReturned)=>{
             // console.log('getLastPlatformPriceModel ', dataReturned)
+            pricesPlayers[req.body.futbinId]['lastPsPrice'] =dataReturned.data.price; 
             if(!dataReturned.data ||  dataReturned.data.price != req.body.lastPsPrice){
                 needUpdate.push({price:req.body.lastPsPrice, idPlatform: 2,idPlayer: req.body.idPlayer}) 
             }
@@ -64,9 +66,10 @@ function verifyPrice(req,res){
         })
         getLastPlatformPriceModel({idPlatform: 3, idPlayer:req.body.idPlayer},(dataReturned)=>{
             // console.log('getLastPlatformPriceModel ', dataReturned)
-            if(!dataReturned.data ||  dataReturned.data.price != req.body.lastOriginPrice){
-                needUpdate.push({price:req.body.lastOriginPrice, idPlatform: 3,idPlayer: req.body.idPlayer});
-            }
+                pricesPlayers[req.body.futbinId]['lastOriginPrice'] = dataReturned.data.price; 
+                if(!dataReturned.data ||  dataReturned.data.price != req.body.lastOriginPrice){
+                    needUpdate.push({price:req.body.lastOriginPrice, idPlatform: 3,idPlayer: req.body.idPlayer});
+                }
             donesLastPrice++;
             if(donesLastPrice == 3){
                 logger.log(' call 1')
