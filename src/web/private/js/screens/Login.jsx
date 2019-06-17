@@ -9,6 +9,10 @@ class Login extends Component{
     
     
     render(){
+        console.log('render Login View', this.props);
+        if(this.props.isLogged == true){
+            this.props.history.push('/market')
+        }
         return(
             <React.Fragment>
                 <div className="general-login">
