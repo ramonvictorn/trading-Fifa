@@ -36,7 +36,7 @@ function priceAnalysis(params,cb){
                     console.log('low price é : ', dataRet.data.idPlatform ,'preço->',dataRet.data.price);
                     lowPrice = dataRet.data.price;
                     if(hightPrice != undefined){
-                        calculatePercentage({lowPrice,hightPrice,...params},
+                        updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
                                 console.log('percentagem is ', dataReturned);
                         })
@@ -46,7 +46,7 @@ function priceAnalysis(params,cb){
                     console.log('HightPrice é ', dataRet.data.price);
                     hightPrice = dataRet.data.price;
                     if(lowPrice != undefined){
-                        calculatePercentage({lowPrice,hightPrice,...params},
+                        updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
                                 console.log('percentagem is ', dataReturned);
                         })
@@ -56,7 +56,58 @@ function priceAnalysis(params,cb){
         })
 }
 
+
+function updatePercentage(params,cb){
+    console.log('updatePercentage');
+    let dateGmt = new GMTdate();
+    let context = {
+        price: params.price,
+        lowPrice : params.lowPrice,
+        hightPrice:params.hightPrice,
+        lastPrice:params.lastPrice,
+        idPlayer: params.idPlayer,
+        idPlatform: params.idPlatform,
+        day : dateGmt.getDay(),
+        month : dateGmt.getMonth(),
+        year : dateGmt.getYear(),
+    }
+    
+    query();
+    function query(){
+        let queryString = `UPDATE  analyzed 
+         SET
+            variation_low_price = $1,
+            variation_high_price = $2,
+            lower_price_last_day = $3,
+            higher_price_last_day = $4,
+            last_price = $5
+        WHERE 
+            id_player = $6 and id_platform = $7 and "day" = $8 and "month" = $9 and "year" = $10;`;
+
+        let queryValues = [
+            getPercentagem(context.price,context.lowPrice),
+            getPercentagem(context.price,context.hightPrice),
+            context.lowPrice,
+            context.hightPrice,
+            context.price,
+            context.idPlayer,
+            context.idPlatform,
+            context.day,
+            context.month,
+            context.year,
+        ];
+        db.query(queryString, queryValues, (err,res)=>{   
+            if(err){
+                console.log('ERROR_ON_GE_UPDADE_ANALIZED_PRICE')
+            }else{
+                return cb({data:res.rows[0]});
+            }
+        })
+    }
+}
+
 function calculatePercentage(params,cb){
+    console.log('insert percentagem')
     let dateGmt = new GMTdate();
     let context = {
         price: params.price,
@@ -93,8 +144,8 @@ function calculatePercentage(params,cb){
             context.price,
             context.lowPrice,
             context.hightPrice,
-            parseInt((((context.lowPrice / context.price) - 1) * 100).toFixed(1)),
-            parseInt((((context.hightPrice / context.price) - 1) * 100).toFixed(1)),
+            getPercentagem(context.price,context.lowPrice),
+            getPercentagem(context.price,context.hightPrice),
             context.day,
             context.month,
             context.year,
@@ -106,10 +157,11 @@ function calculatePercentage(params,cb){
                 return cb({data:res.rows[0]});
             }
         })
-
-        // cb(context.lowPrice+context.hightPrice)
     }
-
+}
+function getPercentagem(price,priceReference){
+    // return parseInt((((price / priceReference) - 1) * 100).toFixed(1))
+    return parseFloat((((price / priceReference) - 1) * 100).toFixed(2))
 }
 
 /**
