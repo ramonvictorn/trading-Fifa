@@ -1,1 +1,1 @@
-webServer : npm run start
+webServer: npm run start
