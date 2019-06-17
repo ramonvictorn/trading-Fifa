@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-
+import PageNavigation from '../components/PageNavigation.jsx';
 
 class Wallet extends React.Component{
     render(){
         return(
-            <h1>page Wallet</h1>
+            <React.Fragment>
+                <PageNavigation></PageNavigation>
+                <h1>Wallet</h1>
+            </React.Fragment>
         )
     }
 }

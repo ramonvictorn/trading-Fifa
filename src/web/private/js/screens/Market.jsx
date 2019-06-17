@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
-
+import SimpleChart from '../components/SimpleChart.jsx';
+import PageNavigation from '../components/PageNavigation.jsx';
 
 class Market extends React.Component{
     render(){
         return(
-            <h1>page Market</h1>
+            <React.Fragment>
+                <PageNavigation></PageNavigation>
+                <SimpleChart></SimpleChart>
+            </React.Fragment>
         )
     }
 }
