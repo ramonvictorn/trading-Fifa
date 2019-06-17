@@ -3,8 +3,7 @@ import echarts from 'echarts';
 
 class Market extends React.Component{
     componentDidMount(){
-        let myCharts = echarts.init(document.getElementById("mycharts"));
-        console.log(myCharts);
+        let myCharts = echarts.init(document.getElementById(this.props.chartId));
         myCharts.setOption({
             xAxis: {
                 type: 'category',
@@ -22,10 +21,19 @@ class Market extends React.Component{
     render(){
         return(
             <React.Fragment>
-            <h1>Simple Chart</h1>
-                <div id="mycharts" style={{width:700,height:500}}>
-
+                <div className="chart-object" id={this.props.chartId} style={{flex:1}}>
                 </div>
+
+                {/* {
+                    window.onresize = function () {
+                        $(".chart-object").each(function () {
+                            var id = $(this).attr('_echarts_instance_');
+                            if (window.echarts.getInstanceById(id)) {
+                                window.echarts.getInstanceById(id).resize();
+                            }
+                        });
+                    }
+                } */}
             </React.Fragment>
         )
     }

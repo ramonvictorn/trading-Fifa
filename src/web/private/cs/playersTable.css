@@ -1,0 +1,137 @@
+.body-page {
+    display: flex;
+    justify-content: center;
+}
+.table {
+    display: flex;
+    justify-content: center;
+    max-width: 90%;
+    margin-top: 30px;
+    flex: 1;
+    flex-direction: column;
+}
+
+.table-header {
+    display: flex;
+    background-color: #3eb9d8;
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+}
+
+.table-header>div {
+    padding: 3px;
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    cursor: context-menu;
+}
+
+.column-playe{
+    display: flex;
+}
+.column-number {
+    max-width: 40px;
+    min-width: 40px;
+}
+
+.top-line-body>div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    cursor: context-menu;
+    padding: 5px;
+    font-family: monospace;
+    font-size: 17px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-line-body>div>div>span {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-line-body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.top-line-body {
+    display: flex;
+}
+.variation{
+    margin-left: auto;
+}
+.top-line-body>.down-arrow {
+    margin-left: auto;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.down-arrow{
+    position: absolute;
+    right: 4px;
+    cursor: pointer;
+}
+
+.table-header .header-column-player>span {
+    padding-left: 30px;
+}
+
+.img-player {
+    width: 30px;
+}
+
+.chart-space {
+    height: 0;
+    padding: 0!important;
+}
+@media(max-width: 650px){
+    .table-header>div>div,
+    .table-line-body>div>div {
+        font-size: 15px;
+    }
+    .table {
+
+        max-width: 95%;
+
+    }
+
+    .table-line-body>div {
+        padding: 3px;
+    }
+    .table-header .header-column-player>span {
+        padding-left: 0px;
+    }
+    
+    .img-player {
+        display: none;
+    }
+}
+
+@media(max-width: 450px){
+    .table-header>div>div,
+    .table-line-body>div>div {
+        font-size: 15px;
+    }
+    .column-number {
+        max-width: 30px;
+        min-width: 30px;
+    }
+    .table {
+
+        max-width: 100%;
+
+    }
+    .table-line-body>div>div {
+        padding: 0px;
+    }
+}
