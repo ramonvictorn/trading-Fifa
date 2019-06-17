@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {
     BrowserRouter as Router, 
     Route, 
@@ -44,12 +44,9 @@ class AppRoutes extends Component{
             success: (ans) => { this.response = ans.data; },
             error: (err) => { this.response = {error : err.responseJSON.error} },
             complete: () => {
-                console.log('response qui ', this.response)
                 if(this.response != undefined && this.response == true){
-                    console.log('setando para true')
                     this.setState({isLogged:true});
                 }else{  
-                    console.log('setando false');
                     this.setState({isLogged:false});
                 }
             }
@@ -60,13 +57,13 @@ class AppRoutes extends Component{
         if (isLogged == null) {
             return <div></div>
         }
-        console.log('state > ', this.state)
+        console.log('appRoutes > ', this.state)
         return(
             <Router>    
                 <Switch>
                     <PrivateRoute path='/wallet' component={WalletView} isLogged={this.state.isLogged} history={history}/>
                     <PrivateRoute path='/market' component={MarketView} isLogged={this.state.isLogged}/>
-                    <Route path='/' component={LoginView}/>
+                    <Route path='/' isLogged={'ramon'} component={(props)=> (<LoginView {...props} isLogged={isLogged}/>)}/>
                 </Switch>
             </Router>
         )
