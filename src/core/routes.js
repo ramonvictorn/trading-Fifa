@@ -11,6 +11,7 @@ const addPricePlayerController = require('./controllers/addPricePlayer.js')
 const addUserController = require('./controllers/addUser.js');
 const loginController = require('./controllers/login.js')
 const isLoggedController = require('./controllers/isLogged.js');
+const getRankingVariationLowPriceControler = require('./controllers/getRankingVariationLowPrice.js');
 
 //middlewares
 const checkParamsMid = require('./middlewares/checkParams.js');
@@ -38,6 +39,7 @@ function init(app){
         }, 5000);
     })
 
-    app.post('/players/addPricePlayer', checkParamsMid, verifyPlayer, verifyPriceMid)
+    app.post('/players/addPricePlayer', checkParamsMid, verifyPlayer, verifyPriceMid);
+    app.post('/getRankingVariationLowPrice', getRankingVariationLowPriceControler);
 
 }
