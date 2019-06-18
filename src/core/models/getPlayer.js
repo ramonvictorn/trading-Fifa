@@ -6,9 +6,9 @@ function getPlayer(context,cb){
     let queryWhere = ``;
     let queryValues = [];
 
-    if(context.idFutbin){
+    if(context.futbinId){
         queryWhere += queryValues.length >= 1 ? 'AND': ' WHERE '
-        queryValues.push(context.idFutbin);
+        queryValues.push(context.futbinId);
         queryWhere += ` id_futbin = $${queryValues.length}`
     }
    
@@ -25,7 +25,11 @@ function getPlayer(context,cb){
         if(err){
             cb({error:'ERROR_ON_GET_PLAYER'})
         }else{
-            cb({data:res.rows})
+            if(res.rows.length == 1){
+                cb({data:res.rows[0]})
+            }else{
+                cb({data:res.rows})
+            }
         }
         
     })

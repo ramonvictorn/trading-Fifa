@@ -26,21 +26,16 @@ const db = require('../../db.js')
             INNER JOIN 
                     platforms 
             ON prices.id_platform = platforms.id_platform and prices.id_player = $1 and prices.id_platform = $2
-            ORDER BY prices.date_inserted LIMIT 1;`
+            ORDER BY prices.date_inserted DESC LIMIT 1;`
     
         db.query(queryString,queryValues,(err,res)=>{   
             if(err){
                 cb({error:'ERROR_ON_GET_LAST_PLATFORM_PRICE'})
             }else{
-                if(!res.rows.length){
-                    cb({
-                            paramSend:{
-                                idPlatform: context.idPlatform,
-                                price: context.price,
-                            }
-                        })
-                }else{
+                if(res.rows.length == 1){
                     cb({data:res.rows[0]})
+                }else{
+                    cb({data:res.rows})
                 }
             }
             
