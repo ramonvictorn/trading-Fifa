@@ -12,21 +12,26 @@ function getRankingVariationLowPrice(context,cb){
         context.offset || 0,
     ];
     let queryString = `SELECT
-        id_player as "idPlayer",
-        id_platform as "idPlatform",
-        last_price as "lastPrice",
-        lower_price_last_day as "lowerPriceLastDay",
-        higher_price_last_day as "higherPriceLastDay",
-        variation_low_price as "variationLowPrice",
-        variation_high_price as "variationHighPrice",
-        day,
-        month,
-        year,
-        date_inserted as "dateInserted"
-    FROM analyzed
+        p.id_player as "idPlayer",
+        p.name,
+        p.details,
+        analyzed.id_platform as "idPlatform",
+        analyzed.last_price as "lastPrice",
+        analyzed.lower_price_last_day as "lowerPriceLastDay",
+        analyzed.higher_price_last_day as "higherPriceLastDay",
+        analyzed.variation_low_price as "variationLowPrice",
+        analyzed.variation_high_price as "variationHighPrice",
+        analyzed.day,
+        analyzed.month,
+        analyzed.year,
+        analyzed.date_inserted as "dateInserted"
+    FROM 
+        analyzed 
+    INNER JOIN 
+        players as p ON p.id_player = analyzed.id_player 
     WHERE 
-        id_platform = $1 AND day = $2 AND month = $3 AND year = $4
-    ORDER by variation_low_price asc limit $5 offset $6 ROWS`;
+        analyzed.id_platform = $1 AND analyzed.day = $2 AND analyzed.month = $3 AND analyzed.year = $4
+    ORDER by analyzed.variation_low_price asc limit $5 offset $6 ROWS`;
 
     db.query(queryString, queryValues, (err,res)=>{   
         if(err){

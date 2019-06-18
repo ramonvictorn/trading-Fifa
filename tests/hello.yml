@@ -3,7 +3,7 @@ config:
   processor: "./my-functions.js"
   phases:
     - duration: 60
-      arrivalRate: 30
+      arrivalRate: 80
   defaults:
     headers:  
       x-my-service-auth: '987401838271002188298567'

@@ -86,22 +86,22 @@
 	   	) WITH (OIDS=FALSE);
 	   	
 	   
-	update  analyzed 
-	set variation_low_price = 45,
-        variation_high_price = -14.47,
-       lower_price_last_day = 11.82,
-            higher_price_last_day = 13.82
-where 
-	id_player = 1 and id_platform = 1 and day = 17 and month = 6 and year = 2019;
+-- 	update  analyzed 
+-- 	set variation_low_price = 45,
+--         variation_high_price = -14.47,
+--        lower_price_last_day = 11.82,
+--             higher_price_last_day = 13.82
+-- where 
+-- 	id_player = 1 and id_platform = 1 and day = 17 and month = 6 and year = 2019;
 
-UPDADE  analyzed 
-         SET
-            variation_low_price = 0,
-            variation_high_price = 14.47,
-            lower_price_last_day = 1182,
-            higher_price_last_day = 1382
-        WHERE 
-            id_player = 1 and id_platform = 2 and "day" = 17 and "month" = 7 and "year" = 2019;"
+-- UPDADE  analyzed 
+--          SET
+--             variation_low_price = 0,
+--             variation_high_price = 14.47,
+--             lower_price_last_day = 1182,
+--             higher_price_last_day = 1382
+--         WHERE 
+--             id_player = 1 and id_platform = 2 and "day" = 17 and "month" = 7 and "year" = 2019;"
 
 
 
