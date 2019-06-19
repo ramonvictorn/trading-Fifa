@@ -10,8 +10,8 @@ function priceAnalysis(params,cb){
             if(dataReturned.data == undefined){
                 // precisa inserir
                 getLowPrice(params,(dataRet)=>{
-                    console.log('low price é : ', dataRet.data.idPlatform ,'preço->',dataRet.data.price);
-                    lowPrice = dataRet.data.price;
+                    // console.log('low price é : ', dataRet ,'preço->',dataRet.data.price);
+                    lowPrice = dataRet.data == undefined ? params.price : dataRet.data.price;
                     if(hightPrice != undefined){
                         calculatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
@@ -20,8 +20,8 @@ function priceAnalysis(params,cb){
                     }
                 });
                 getHightPrice(params,(dataRet)=>{
-                    console.log('HightPrice é ', dataRet.data.price);
-                    hightPrice = dataRet.data.price;
+                    // console.log('HightPrice é ', dataRet.data.price);
+                    hightPrice = dataRet.data == undefined ? params.price : dataRet.data.price;
                     if(lowPrice != undefined){
                         calculatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
@@ -33,8 +33,8 @@ function priceAnalysis(params,cb){
             }else{
                 // update
                 getLowPrice(params,(dataRet)=>{
-                    console.log('low price é : ', dataRet.data.idPlatform ,'preço->',dataRet.data.price);
-                    lowPrice = dataRet.data.price;
+                    // console.log('low price é : ', dataRet.data.idPlatform ,'preço->',dataRet.data.price);
+                    lowPrice = dataRet.data == undefined ? params.price : dataRet.data.price;
                     if(hightPrice != undefined){
                         updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
@@ -43,8 +43,8 @@ function priceAnalysis(params,cb){
                     }
                 });
                 getHightPrice(params,(dataRet)=>{
-                    console.log('HightPrice é ', dataRet.data.price);
-                    hightPrice = dataRet.data.price;
+                    // console.log('HightPrice é ', dataRet.data.price);
+                    hightPrice = dataRet.data == undefined ? params.price : dataRet.data.price
                     if(lowPrice != undefined){
                         updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
@@ -177,7 +177,7 @@ function getLowPrice(params,cb){
     let queryValues = [
         params.idPlatform,
         params.idPlayer,
-        dateGMT.getDay(),
+        dateGMT.getDayBefore(),
         dateGMT.getMonth(),
         dateGMT.getYear(),  
     ];
@@ -199,6 +199,7 @@ function getLowPrice(params,cb){
         }
     })
 
+
 }
 
 /**
@@ -214,7 +215,7 @@ function getHightPrice(params,cb){
     let queryValues = [
         params.idPlatform,
         params.idPlayer,
-        dateGMT.getDay(),
+        dateGMT.getDayBefore(),
         dateGMT.getMonth(),
         dateGMT.getYear(),  
     ];
