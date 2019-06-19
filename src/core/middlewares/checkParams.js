@@ -7,8 +7,8 @@ module.exports = function(req,res,next){
 }
 function verifyParams(params){
     if(isNaN(params.futbinId)|| params.futbinId == 0) return false;
-    if( isNaN(params.lastXboxPrice)) return false;
-    if( isNaN(params.lastOriginPrice)) return false;
-    if( isNaN(params.lastPsPrice)) return false;
+    if( isNaN(params.lastXboxPrice) || parseInt(params.lastXboxPrice) == 0) return false;
+    if( isNaN(params.lastOriginPrice) || parseInt(params.lastOriginPrice) == 0) return false;
+    if( isNaN(params.lastPsPrice) || parseInt(params.lastPsPrice) == 0) return false;
     return true;
 }
