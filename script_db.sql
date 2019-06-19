@@ -84,7 +84,6 @@
 	   	
 	INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Ramon Victor', 'ramon.victor','cb7fcdd51aa0623013ed7ac3b666672b100ac08de7d0de22e88a0210eea9fae9', '{}', now());   
 	INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Caetano Sasia', 'caetano.sasia','f49de99820177aab9480f60cf90b137a3cf23474d3a191c8921041f9559e893a', '{}', now());   
-	
 -- 	update  analyzed 
 -- 	set variation_low_price = 45,
 --         variation_high_price = -14.47,

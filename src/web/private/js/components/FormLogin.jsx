@@ -28,29 +28,30 @@ class FormLogin extends Component{
           });
     }
     login(){
+        let serverAns = {};
         let data = {
             login: this.state.login,
             password: this.state.password,
         }
         $.ajax({
-            type: "POST",
             url: '/login',
-            data: data,
-            dataType:   'JSON',
-            complete:(ret)=>{
-                console.log('complet')
-                // this.redirect();
-                
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: (ans) => { serverAns = ans; },
+            error: (err) => { serverAns = err.responseJSON },
+            complete: () => {
+                console.log('COMPLET ', serverAns);    
+                if(serverAns.data){
+                    this.props.callback(true);
+                }else{
+                    this.props.callback(false);
+                }
             }
-          });
+        });
     }
     render(){
-        
-        // console.log("render formLogin ", this.props, 'history -> ', history);
-        // if (this.oi) {
-        //     this.oi = false;
-        //     return <Redirect to="/wallet" />
-        // }
         return(
             <React.Fragment>
                 <div className="form">

@@ -8,7 +8,7 @@ let pool;
  * @param {function} cb - Callback to run affer connection with databases 
  */
 function initDb(cb){
-    logger.log('db.js - initDb Connectin with databases..')
+    logger.log(`db.js - initDb Connectin with databases.. on ${settings.DB_HOST}`)
     pool = new Pool({
         user: settings.DB_USER,  
         host: settings.DB_HOST,
