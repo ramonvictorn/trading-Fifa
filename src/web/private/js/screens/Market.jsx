@@ -6,7 +6,7 @@ import PlayersTable from '../components/PlayersTable.jsx';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {lista : [{
+        this.state = {listaXbox : [{
             player: {
                 number: '1',
                 name: 'Ronaldinho Gaúcho',
@@ -79,6 +79,31 @@ class Market extends React.Component{
             }
         }
         ]};    
+    }
+
+    getRanking(){
+        let data = {
+            "idPlatform":"1",
+            "offset": "0",
+            "qtd":"10"   
+        }
+        $.ajax({
+            url: '/getRankingVariationLowPrice',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: (ans) => { serverAns = ans; },
+            error: (err) => { serverAns = err.responseJSON },
+            complete: () => {
+                console.log('COMPLET ', serverAns);    
+                if(serverAns.data){
+                    this.props.callback(true);
+                }else{
+                    this.props.callback(false);
+                }
+            }
+        });
     }
 
     componentDidMount(){  
