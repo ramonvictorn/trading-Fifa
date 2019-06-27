@@ -3,10 +3,22 @@ import SimpleChart from '../components/SimpleChart.jsx';
 
 class Market extends React.Component{
     componentDidMount(){
+        this.state = {renderChart: Math.random()};
         this.props.lista.map(function(player) {
-            console.log(player)
         })
+        this.renderChart = this.state.renderChart;
     }
+
+    handleClick(id) {
+        if (document.getElementById(id).classList.contains('active')) {
+            document.getElementById(id).classList.remove('active')
+        }  else { 
+            document.getElementById(id).classList.add('active');
+            this.setState({renderChart: Math.random()})
+            this.renderChart = this.state.renderChart;
+        }
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -21,10 +33,10 @@ class Market extends React.Component{
                             <div className="header-column-variation"><span>Variação (24h)</span></div>
                         </div>
                         {
-                            this.props.lista.map(function(object){
+                            this.props.lista.map((object, index) => {
                               return (
-                                <div key={object.player.number} className="table-line-body">
-                                    <div className="top-line-body">
+                                <div key={object.player.number} id={object.player.number}  className="table-line-body">
+                                    <div className="top-line-body" onClick={() => this.handleClick(object.player.number)}>
                                         <div className="column-number"><span>{object.player.number}</span></div>
                                         <div className="column-player">
                                             <img className="img-player" src={object.player.img} alt="img player"/>
@@ -34,10 +46,10 @@ class Market extends React.Component{
                                         <div className="column-price"><span>{object.player.smallerPrice}</span></div>
                                         <div className="column-price"><span>{object.player.biggerPrice}</span></div>
                                         <div className="column-variation"><span>{object.player.variation}</span></div>
-                                        <div className="down-arrow">??</div>
+                                        <div className="icon">^</div>
                                         </div>
                                     <div className="chart-space">
-                                        <SimpleChart chartId={object.player.chartId}></SimpleChart> 
+                                        <SimpleChart renderChart={this.renderChart} chartId={object.player.chartId}></SimpleChart> 
                                     </div>
                                 </div>
                               );

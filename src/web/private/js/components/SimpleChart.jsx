@@ -4,36 +4,58 @@ import echarts from 'echarts';
 class Market extends React.Component{
     componentDidMount(){
         let myCharts = echarts.init(document.getElementById(this.props.chartId));
-        myCharts.setOption({
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        });
+        this.renderChart();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+
+        // console.log(this.props.renderChart)
+        // if(this.props.renderChart == 'teste')  {
+        //     console.log('teste')
+        // }
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        const oldProps = this.props
+        if(oldProps.renderChart !== newProps.renderChart) {
+          setTimeout(() => {
+            this.chart.resize();
+          }, 500);
+        }
+      }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    updateDimensions(){
+        this.chart.resize();
+    }
+
+    renderChart() {
+        var element = document.getElementById(this.props.chartId);
+        if(element){
+            var myChart = echarts.init(element);
+            myChart.setOption({
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    type: 'line' 
+                }]
+            });
+            this.chart = myChart;
+        }
     }
     render(){
         return(
             <React.Fragment>
                 <div className="chart-object" id={this.props.chartId} style={{flex:1}}>
                 </div>
-
-                {/* {
-                    window.onresize = function () {
-                        $(".chart-object").each(function () {
-                            var id = $(this).attr('_echarts_instance_');
-                            if (window.echarts.getInstanceById(id)) {
-                                window.echarts.getInstanceById(id).resize();
-                            }
-                        });
-                    }
-                } */}
             </React.Fragment>
         )
     }
