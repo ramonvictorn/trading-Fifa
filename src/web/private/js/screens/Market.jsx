@@ -14,7 +14,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '11'
             }
         }, 
@@ -26,7 +26,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '22'
             }
         },
@@ -38,7 +38,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '33'
             }
         },
@@ -50,7 +50,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '44'
             }
         },
@@ -62,7 +62,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '55'
             }
         },
@@ -74,7 +74,7 @@ class Market extends React.Component{
                 smallerPrice: '$1300',
                 biggerPrice: '$2000',
                 variation: '-10%',
-                img: 'https://www.pinclipart.com/picdir/middle/46-469601_feet-clipart-soccer-bola-de-futebol-desenho-png.png',
+                img: '/assets/bola.png',
                 chartId: '66'
             }
         }
@@ -114,6 +114,17 @@ class Market extends React.Component{
     render(){
         return(
             <React.Fragment>
+                <div className="console-options">
+                    <div className="ps4-option">
+                        <img src="/assets/ps4.png" alt=""/>
+                    </div>
+                    <div className="xbox-option">
+                        <img src="/assets/xbox.svg" alt=""/>
+                    </div>
+                    <div className="pc-option">
+                        <img src="/assets/pc.png" alt=""/>
+                    </div>
+                </div>
                 <PageNavigation></PageNavigation>
                 <PlayersTable lista={this.state.lista}></PlayersTable>
             </React.Fragment>
