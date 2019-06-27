@@ -36,16 +36,50 @@ class Market extends React.Component{
         if(element){
             var myChart = echarts.init(element);
             myChart.setOption({
+                color: ['#823eef'],
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'white'
+                        }
+                    },
+                    axisPointer: {
+                        handle: {
+                            color: 'red'
+                        }
+                    },
+            
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 40
+                    }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    splitLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: 'white',
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'white'
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    }
                 },
                 series: [{
                     data: [820, 932, 901, 934, 1290, 1330, 1320],
-                    type: 'line' 
+                    type: 'line' ,
+                    areaStyle: {}
                 }]
             });
             this.chart = myChart;

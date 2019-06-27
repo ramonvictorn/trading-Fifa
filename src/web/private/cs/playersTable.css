@@ -13,8 +13,9 @@
 
 .table-header {
     display: flex;
-    background-color: #3eb9d8;
+    background-color: #212025;
     flex: 1;
+    padding: 15px 5px;
     border-radius: 4px 4px 0 0;
 }
 
@@ -39,6 +40,7 @@
 }
 
 .top-line-body>div {
+    color: white;
     flex: 1;
     display: flex;
     align-items: center;
@@ -55,13 +57,14 @@
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-left: 5px;
 }
 
 .table-line-body {
     display: flex;
     flex-direction: column;
     position: relative;
-    border-bottom: 1px solid #3eb9d8;
+    border-bottom: 1px solid #823eef;
 }
 
 .top-line-body {
@@ -114,7 +117,7 @@
 }
 
 .active .chart-space {
-    height: 350px;
+    height: 400px;
 }
 .chart-object {
     height: 100%;
