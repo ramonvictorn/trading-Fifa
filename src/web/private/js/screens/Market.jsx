@@ -82,7 +82,6 @@ class Market extends React.Component{
     }
 
     componentDidMount(){  
-        getRanking();
     } 
 
 
