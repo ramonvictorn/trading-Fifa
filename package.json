@@ -38,6 +38,7 @@
     "pg": "^7.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-infinite-scroll-component": "^4.5.2",
     "react-loader-spinner": "^2.3.0",
     "react-router-dom": "^5.0.1",
     "session-file-store": "^1.2.0",

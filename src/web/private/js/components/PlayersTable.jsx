@@ -2,12 +2,45 @@ import React, {Component} from 'react';
 import SimpleChart from '../components/SimpleChart.jsx';
 import Loader from 'react-loader-spinner';
 
+
 class Market extends React.Component{
+    constructor() {
+        super();    
+        this.state = {lista : []};    
+    }
     componentDidMount(){
         this.state = {renderChart: Math.random()};
         this.props.lista.map(function(player) {
         })
         this.renderChart = this.state.renderChart;
+        this.getList('1', '0', '10');
+        
+    }
+
+    getList(idPlataform, offset, qtd) {
+        $.ajax({
+            url: '/getRankingVariationLowPrice',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "idPlatform": idPlataform,
+                "offset": offset,
+                "qtd": qtd  
+            }),
+            success: (ans) => { this.serverAns = ans; },
+            error: (err) => { this.serverAns = err.responseJSON },
+            complete: () => {
+                console.log(this.serverAns.data)
+                this.setState({lista:this.serverAns.data});
+
+                if(this.serverAns.data){
+                    this.props.callback(true);
+                }else{
+                    this.props.callback(false);
+                }
+            }
+        });
     }
 
     handleClick(id) {
@@ -32,10 +65,10 @@ class Market extends React.Component{
     render(){
         let tableItens;
 
-        if(this.isEmpty(this.props.lista)) {
+        if(this.isEmpty(this.state.lista)) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else {
-            tableItens = this.props.lista.map((object, index) => {
+            tableItens = this.state.lista.map((object, index) => {
                 return (
                   <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
                       <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer)}>

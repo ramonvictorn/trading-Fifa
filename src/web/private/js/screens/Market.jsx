@@ -10,29 +10,7 @@ class Market extends React.Component{
     }
 
     componentDidMount(){  
-        $.ajax({
-            url: '/getRankingVariationLowPrice',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "idPlatform":"1",
-                "offset": "0",
-                "qtd":"10"   
-            }),
-            success: (ans) => { this.serverAns = ans; },
-            error: (err) => { this.serverAns = err.responseJSON },
-            complete: () => {
-                console.log(this.serverAns.data)
-                this.setState({lista:this.serverAns.data});
-
-                if(this.serverAns.data){
-                    this.props.callback(true);
-                }else{
-                    this.props.callback(false);
-                }
-            }
-        });
+        
     } 
 
 

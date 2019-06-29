@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faCamera , faTimesCircle} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee, faCamera , faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 // import { timesCircle } from '@fortawesome/free-solid-svg-icons'
 class ModalAlert extends Component {
     constructor(){
