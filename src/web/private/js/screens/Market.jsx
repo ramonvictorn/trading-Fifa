@@ -6,79 +6,7 @@ import PlayersTable from '../components/PlayersTable.jsx';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {lista : [{
-            player: {
-                number: '1',
-                name: 'Ronaldinho Gaúcho',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '11'
-            }
-        }, 
-        {
-            player: {
-                number: '2',
-                name: 'Messi',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '22'
-            }
-        },
-        {
-            player: {
-                number: '3',
-                name: 'Ronaldo Fenômeno',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '33'
-            }
-        },
-        {
-            player: {
-                number: '4',
-                name: 'Cristiano Ronaldo',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '44'
-            }
-        },
-        {
-            player: {
-                number: '5',
-                name: 'Não sei mais nomes',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '55'
-            }
-        },
-        {
-            player: {
-                number: '6',
-                name: 'Presunto',
-                actualPrice: '$1440',
-                smallerPrice: '$1300',
-                biggerPrice: '$2000',
-                variation: '-10%',
-                img: '/assets/bola.png',
-                chartId: '66'
-            }
-        }
-        ]};    
+        this.state = {lista : []};    
     }
 
     componentDidMount(){  
@@ -90,12 +18,14 @@ class Market extends React.Component{
             data: JSON.stringify({
                 "idPlatform":"1",
                 "offset": "0",
-                "qtd":"5"   
+                "qtd":"10"   
             }),
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                console.log('COMPLET ', this.serverAns);
+                console.log(this.serverAns.data)
+                this.setState({lista:this.serverAns.data});
+
                 if(this.serverAns.data){
                     this.props.callback(true);
                 }else{

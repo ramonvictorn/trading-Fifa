@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SimpleChart from '../components/SimpleChart.jsx';
+import Loader from 'react-loader-spinner';
 
 class Market extends React.Component{
     componentDidMount(){
@@ -19,7 +20,43 @@ class Market extends React.Component{
         }
     }
 
+    isEmpty(obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+    
+        return true;
+    }
+
     render(){
+        let tableItens;
+
+        if(this.isEmpty(this.props.lista)) {
+            tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
+        } else {
+            tableItens = this.props.lista.map((object, index) => {
+                return (
+                  <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
+                      <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer)}>
+                          <div className="column-number"><span>{object.idPlayer}</span></div>
+                          <div className="column-player">
+                              <img className="img-player" src="/assets/bola.png" alt="img player"/>
+                              <span title={object.name}>{object.name}</span>
+                              </div>
+                          <div className="column-actual-price"><span>R${object.lastPrice.toLocaleString("pt-BR")}</span></div>
+                          <div className="column-price"><span>R${object.lowerPriceLastDay.toLocaleString("pt-BR")}</span></div>
+                          <div className="column-price"><span>R${object.higherPriceLastDay.toLocaleString("pt-BR")}</span></div>
+                          <div className="column-variation"><span>{object.variationHighPrice}</span></div>
+                          <div className="icon">^</div>
+                          </div>
+                      <div className="chart-space">
+                          <SimpleChart renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
+                      </div>
+                  </div>
+                );
+              })
+        }
         return(
             <React.Fragment>
                 <div className="body-page">
@@ -32,29 +69,7 @@ class Market extends React.Component{
                             <div className="header-column-price"><span>Maior preço (24h)</span></div>
                             <div className="header-column-variation"><span>Variação (24h)</span></div>
                         </div>
-                        {
-                            this.props.lista.map((object, index) => {
-                              return (
-                                <div key={object.player.number} id={object.player.number}  className="table-line-body">
-                                    <div className="top-line-body" onClick={() => this.handleClick(object.player.number)}>
-                                        <div className="column-number"><span>{object.player.number}</span></div>
-                                        <div className="column-player">
-                                            <img className="img-player" src={object.player.img} alt="img player"/>
-                                            <span>{object.player.name}</span>
-                                            </div>
-                                        <div className="column-actual-price"><span>{object.player.actualPrice}</span></div>
-                                        <div className="column-price"><span>{object.player.smallerPrice}</span></div>
-                                        <div className="column-price"><span>{object.player.biggerPrice}</span></div>
-                                        <div className="column-variation"><span>{object.player.variation}</span></div>
-                                        <div className="icon">^</div>
-                                        </div>
-                                    <div className="chart-space">
-                                        <SimpleChart renderChart={this.renderChart} chartId={object.player.chartId}></SimpleChart> 
-                                    </div>
-                                </div>
-                              );
-                            })
-                          }
+                        {tableItens}
                     </div>
                 </div>
             </React.Fragment>
