@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SimpleChart from '../components/SimpleChart.jsx';
 import Loader from 'react-loader-spinner';
-
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Market extends React.Component{
     constructor() {
@@ -68,32 +68,55 @@ class Market extends React.Component{
         if(this.isEmpty(this.state.lista)) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else {
-            tableItens = this.state.lista.map((object, index) => {
-                return (
-                  <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
-                      <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer)}>
-                          <div className="column-number"><span>{object.idPlayer}</span></div>
-                          <div className="column-player">
-                              <img className="img-player" src="/assets/bola.png" alt="img player"/>
-                              <span title={object.name}>{object.name}</span>
-                              </div>
-                          <div className="column-actual-price"><span>R${object.lastPrice.toLocaleString("pt-BR")}</span></div>
-                          <div className="column-price"><span>R${object.lowerPriceLastDay.toLocaleString("pt-BR")}</span></div>
-                          <div className="column-price"><span>R${object.higherPriceLastDay.toLocaleString("pt-BR")}</span></div>
-                          <div className="column-variation"><span>{object.variationHighPrice}</span></div>
-                          <div className="icon">^</div>
-                          </div>
-                      <div className="chart-space">
-                          <SimpleChart renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
-                      </div>
-                  </div>
-                );
-              })
+            tableItens = 
+            <InfiniteScroll
+                dataLength={5}
+                next={console.log('teste')}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                    <p style={{ textAlign: "center", color:"white" }}>
+                    <b>Yay! You have seen it all</b>
+                    </p>
+                }
+                >
+            {this.state.lista.map((object, index) => (
+                <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
+                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer)}>
+                        <div className="column-number"><span>{object.idPlayer}</span></div>
+                        <div className="column-player">
+                            <img className="img-player" src="/assets/bola.png" alt="img player"/>
+                            <span title={object.name}>{object.name}</span>
+                            </div>
+                        <div className="column-actual-price"><span>R${object.lastPrice.toLocaleString("pt-BR")}</span></div>
+                        <div className="column-price"><span>R${object.lowerPriceLastDay.toLocaleString("pt-BR")}</span></div>
+                        <div className="column-price"><span>R${object.higherPriceLastDay.toLocaleString("pt-BR")}</span></div>
+                        <div className="column-variation"><span>{object.variationHighPrice}</span></div>
+                        <div className="icon">^</div>
+                        </div>
+                    <div className="chart-space">
+                        <SimpleChart renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
+                    </div>
+                </div>
+              )
+            )}</InfiniteScroll>
+            
         }
         return(
             <React.Fragment>
                 <div className="body-page">
                     <div className="table">
+                        <div className="console-options">
+                            <div className="ps4-option" title="Playstation 4 Plataform">
+                                <img src="/assets/ps4.png" alt=""/>
+                            </div>
+                            <div className="xbox-option" title="Xbox Plataform">
+                                <img src="/assets/xbox.svg" alt=""/>
+                            </div>
+                            <div className="pc-option" title="Computer Plataform">
+                                <img src="/assets/pc.png" alt=""/>
+                            </div>
+                        </div>
                         <div className="table-header">
                             <div className="header-column-number column-number"><span>#</span></div>
                             <div className="header-column-player"><span>Jogador</span></div>

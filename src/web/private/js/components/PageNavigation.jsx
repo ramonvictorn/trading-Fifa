@@ -30,7 +30,7 @@ class Market extends React.Component{
                 <div className="navigation">
                     <NavLink to="/Wallet" activeClassName="selected">Wallet</NavLink>
                     <NavLink to="/Market" activeClassName="selected">Market</NavLink>
-                    <div onClick={this.logout} className="logout"><img src="https://cdn1.iconfinder.com/data/icons/basic-application-vol-1/128/Material_Design-49-512.png" alt=""/></div>
+                    <div onClick={this.logout} title="Logout" className="logout"><img src="https://cdn1.iconfinder.com/data/icons/basic-application-vol-1/128/Material_Design-49-512.png" alt=""/></div>
                 </div>
             </React.Fragment>
         )

@@ -35,9 +35,9 @@ body {
 .console-options {
   position: absolute;
   display: flex;
-  right: 5%;
-  top: 96px;
+  top: -55px;
   width: 180px;
+  right: 0;
   justify-content: space-between;
 }
 
