@@ -112,6 +112,7 @@ class Market extends React.Component{
 
       
     render(){
+        console.log('props da vie ', this.props)
         return(
             <React.Fragment>
                 <div className="console-options">
@@ -125,7 +126,7 @@ class Market extends React.Component{
                         <img src="/assets/pc.png" alt=""/>
                     </div>
                 </div>
-                <PageNavigation></PageNavigation>
+                <PageNavigation cbSetState={this.props.cbSetState}></PageNavigation>
                 <PlayersTable lista={this.state.lista}></PlayersTable>
             </React.Fragment>
         )

@@ -2,3 +2,45 @@ h1 {
     color: red;
 }
 
+.modalAlert{
+    width: 270px;
+    background-color: #fff;
+    height: 186px;
+    position: absolute;
+    z-index: 2;
+}
+
+.textBodyModal{
+    text-align: center;
+    font-size: 19px;
+}
+
+.textHeadModal{
+    text-align: center;
+    font-size: 20px;
+}
+
+.iconHead{
+    font-size: 22px;
+    position: relative;
+    top: -23px;
+    left: 244px;
+}
+
+.imgBall{
+    width: 113px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 3s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.error{
+    color: red;
+}
+
+.loading{
+    color: blue;
+}
