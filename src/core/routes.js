@@ -12,7 +12,7 @@ const addUserController = require('./controllers/addUser.js');
 const loginController = require('./controllers/login.js')
 const isLoggedController = require('./controllers/isLogged.js');
 const getRankingVariationLowPriceControler = require('./controllers/getRankingVariationLowPrice.js');
-
+const logoutController = require('./controllers/logout.js')
 //middlewares
 const checkParamsMid = require('./middlewares/checkParams.js');
 const verifyPlayer = require('./middlewares/verifyPlayer.js');
@@ -32,7 +32,8 @@ function init(app){
     app.post('/users/addUser', addUserController);
     app.post('/login', loginController );
     app.post('/users/isLogged', isLoggedController);
-
+    app.post('/logout' ,logoutController );
+    
     app.post('/testeSet', (req,res)=>{
         setTimeout(() => {
             res.status(200).send({'data':'setFoi'})
