@@ -91,7 +91,7 @@ class Market extends React.Component{
                         <div className="column-actual-price"><span>R${object.lastPrice.toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.lowerPriceLastDay.toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.higherPriceLastDay.toLocaleString("pt-BR")}</span></div>
-                        <div className="column-variation"><span>{object.variationHighPrice}</span></div>
+                        <div className="column-variation"><span>{object.variationLowPrice}</span></div>
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">

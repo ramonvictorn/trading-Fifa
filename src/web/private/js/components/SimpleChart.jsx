@@ -13,6 +13,25 @@ class Market extends React.Component{
         // }
 
     }
+    getData(){
+        $.ajax({
+            url: '/player/getPrices',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "idPlatform": 1,
+                "idPlayer": 1,
+                "month":  6 ,//OPCIONAL -> SE NÃO ENVIAR ELE USA O MÊS ATUAL
+                "year": 2019,//OPCIONAL -> SE NÃO ENVIAR ELE USA O ANO ATUAL  
+            }),
+            success: (ans) => { this.serverAns = ans; },
+            error: (err) => { this.serverAns = err.responseJSON },
+            complete: () => {
+                console.log('prices recebidos,', this.serverAns.data)
+            }
+        });
+    }
 
     componentWillReceiveProps(newProps) {
         const oldProps = this.props
@@ -86,6 +105,8 @@ class Market extends React.Component{
         }
     }
     render(){
+        console.log('render simpleChart');
+        this.getData();
         return(
             <React.Fragment>
                 <div className="chart-object" id={this.props.chartId} style={{flex:1}}>
