@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import SimpleChart from '../components/SimpleChart.jsx';
 import Loader from 'react-loader-spinner';
 import InfiniteScroll from "react-infinite-scroll-component";
+// import { threadId } from 'worker_threads';
 
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {lista : []};    
+        this.state = {};    
     }
     componentDidMount(){
         this.state = {renderChart: Math.random()};
@@ -43,7 +44,7 @@ class Market extends React.Component{
         });
     }
 
-    handleClick(id) {
+    handleClick(id, position) {
         if (document.getElementById(id).classList.contains('active')) {
             document.getElementById(id).classList.remove('active')
         }  else { 
@@ -51,6 +52,7 @@ class Market extends React.Component{
             this.setState({renderChart: Math.random()})
             this.renderChart = this.state.renderChart;
         }
+        //
     }
 
     isEmpty(obj) {
@@ -64,10 +66,11 @@ class Market extends React.Component{
 
     render(){
         let tableItens;
-
-        if(this.isEmpty(this.state.lista)) {
+        if(!this.state.lista) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
-        } else {
+        } else if  (this.isEmpty(this.state.lista)){
+            tableItens = <div className="no-data-found">No data found</div>
+        }else {
             tableItens = 
             <InfiniteScroll
                 dataLength={5}
@@ -82,7 +85,7 @@ class Market extends React.Component{
                 >
             {this.state.lista.map((object, index) => (
                 <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
-                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer)}>
+                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
                         <div className="column-number"><span>{object.idPlayer}</span></div>
                         <div className="column-player">
                             <img className="img-player" src="/assets/bola.png" alt="img player"/>
@@ -95,7 +98,7 @@ class Market extends React.Component{
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">
-                        <SimpleChart renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
+                        <SimpleChart show={this.state.lista[index].show} renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
                     </div>
                 </div>
               )
