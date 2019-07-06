@@ -10,7 +10,6 @@ class Market extends React.Component{
         this.state = {};    
     }
     componentDidMount(){
-        this.state = {renderChart: Math.random()};
         this.props.lista.map(function(player) {
         })
         this.renderChart = this.state.renderChart;
@@ -50,9 +49,8 @@ class Market extends React.Component{
         }  else { 
             document.getElementById(id).classList.add('active');
             this.setState({renderChart: Math.random()})
-            this.renderChart = this.state.renderChart;
-            // this.setState(this.state.lista[index].show = true);
-            console.log(this.state.lista[index])
+            this.state.lista[index].show = true
+            
         }
         //
     }
@@ -76,7 +74,7 @@ class Market extends React.Component{
             tableItens = 
             <InfiniteScroll
                 dataLength={5}
-                next={console.log('teste')}
+                next={55}
                 hasMore={true}
                 loader={<h4>Loading...</h4>}
                 endMessage={
@@ -100,7 +98,7 @@ class Market extends React.Component{
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">
-                        <SimpleChart show={this.state.lista[index].show} renderChart={this.renderChart} chartId={object.idPlayer+'b'}></SimpleChart> 
+                        <SimpleChart show={this.state.lista[index].show} chartId={object.idPlayer+'b'}></SimpleChart> 
                     </div>
                 </div>
               )

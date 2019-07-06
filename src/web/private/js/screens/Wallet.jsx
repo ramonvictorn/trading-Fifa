@@ -21,7 +21,6 @@ class Wallet extends React.Component{
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
                 console.log('exemplo de getWallet -> ' ,this.serverAns.data)
-                
             }
         });
     }

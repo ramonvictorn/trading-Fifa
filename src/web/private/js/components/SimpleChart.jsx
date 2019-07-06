@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import echarts from 'echarts';
+import Loader from 'react-loader-spinner';
 
 class Market extends React.Component{
     constructor() {
@@ -9,14 +10,6 @@ class Market extends React.Component{
     componentDidMount(){
         let myCharts = echarts.init(document.getElementById(this.props.chartId));
         this.renderChart();
-        window.addEventListener("resize", this.updateDimensions.bind(this));
-
-        // console.log(this.props.renderChart)
-        // if(this.props.renderChart == 'teste')  {
-        //     console.log('teste')
-        // }
-        console.log(this.props)
-
     }
     getData(){
         $.ajax({
@@ -33,17 +26,20 @@ class Market extends React.Component{
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                // console.log('prices recebidos,', this.serverAns.data)
+                
+                this.setState({dataPrices: this.serverAns.data})
+                console.log('prices recebidos,', this.state.dataPrices)
             }
         });
     }
 
     componentWillReceiveProps(newProps) {
-        const oldProps = this.props
-        if(oldProps.renderChart !== newProps.renderChart) {
-          setTimeout(() => {
-            this.chart.resize();
-          }, 500);
+        const oldProps = this.props;
+        if(newProps.show != oldProps.show) {
+            this.getData();
+            setTimeout(() => {
+                this.chart.resize();
+            }, 500);
         }
       }
 
@@ -110,12 +106,22 @@ class Market extends React.Component{
         }
     }
     render(){
-        console.log('render simpleChart');
-        this.getData();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+        var chartLoader = <div className="chart-loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
+        if(this.state.dataPrices) {
+            if(this.state.dataPrices.length == 0) {
+                chartLoader = <div className="chart-loader"><span style={{color: 'white', fontFamily: 'monospace'}}>No data Found</span></div>;
+            }
+            if(this.state.dataPrices.length > 0) {
+                chartLoader = '';
+            }
+            
+        }
         return(
             <React.Fragment>
                 <div className="chart-object" id={this.props.chartId} style={{flex:1}}>
                 </div>
+                {chartLoader}
             </React.Fragment>
         )
     }
