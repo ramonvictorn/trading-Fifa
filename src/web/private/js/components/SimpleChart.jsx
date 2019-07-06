@@ -74,6 +74,16 @@ class Market extends React.Component{
             var myChart = echarts.init(element);
             myChart.setOption({
                 color: ['#823eef'],
+                tooltip : {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        const param = params[0];
+                        const value = parseFloat(param.value).toLocaleString('pt-BR');
+                        const label = 'Dia: ' + param.axisValue + '<br />' + 'Mês: Julho' + '<br />' + param.marker + param.seriesName + ': R$' + value
+                        return label;
+
+                    }
+                },
                 xAxis: {
                     type: 'category',
                     data: this.state.chartDataDay,
@@ -103,6 +113,12 @@ class Market extends React.Component{
                     },
                     axisLabel: {
                         color: 'white',
+                        formatter: function (params) {
+                            const value = parseFloat(params).toLocaleString('pt-BR');
+                            const label = 'R$' + value
+                            return label;
+    
+                        }
                     },
                     axisLine: {
                         lineStyle: {
@@ -114,6 +130,7 @@ class Market extends React.Component{
                     }
                 },
                 series: [{
+                    name: 'Preço',
                     data: this.state.chartDataPrice,
                     type: 'line' ,
                     areaStyle: {}
