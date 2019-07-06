@@ -7,14 +7,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {};    
+        this.state = {plataform: 1};    
     }
     componentDidMount(){
         this.props.lista.map(function(player) {
         })
         this.renderChart = this.state.renderChart;
-        this.getList('1', '0', '10');
-        
+        this.getList(this.state.plataform, '0', '10');
     }
 
     getList(idPlataform, offset, qtd) {
@@ -34,11 +33,11 @@ class Market extends React.Component{
                 console.log(this.serverAns.data)
                 this.setState({lista:this.serverAns.data});
 
-                if(this.serverAns.data){
-                    this.props.callback(true);
-                }else{
-                    this.props.callback(false);
-                }
+                // if(this.serverAns.data){
+                //     this.props.callback(true);
+                // }else{
+                //     this.props.callback(false);
+                // }
             }
         });
     }
@@ -73,9 +72,27 @@ class Market extends React.Component{
         return variationDiv = <div className={variationColor}><span>{variation}</span></div>
     }
 
+    plataformClick(res) {
+        this.setState({plataform: res})
+        this.setState({lista: null})
+        this.getList(this.state.plataform, '0', '10');
+    }
+
     render(){
         let tableItens;
-        if(!this.state.lista) {
+        let ps4Class = 'ps4-option';
+        if(this.state.plataform == 2) {
+            ps4Class = 'ps4-option active';
+        }
+        let xboxClass = 'xbox-option';
+        if(this.state.plataform == 1) {
+            xboxClass = 'ps4-option active';
+        }
+        let pcClass = 'pc-option';
+        if(this.state.plataform == 3) {
+            pcClass = 'ps4-option active';
+        }
+        if(!this.state.lista || this.state.lista == null) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else if  (this.isEmpty(this.state.lista)){
             tableItens = <div className="no-data-found">No data found</div>
@@ -120,13 +137,13 @@ class Market extends React.Component{
                 <div className="body-page">
                     <div className="table">
                         <div className="console-options">
-                            <div className="ps4-option" title="Playstation 4 Plataform">
+                            <div className={ps4Class} title="Playstation 4 Plataform" onClick={() => this.plataformClick(2)}>
                                 <img src="/assets/ps4.png" alt=""/>
                             </div>
-                            <div className="xbox-option" title="Xbox Plataform">
+                            <div className={xboxClass} title="Xbox Plataform" onClick={() => this.plataformClick(1)}>
                                 <img src="/assets/xbox.svg" alt=""/>
                             </div>
-                            <div className="pc-option" title="Computer Plataform">
+                            <div className={pcClass} title="Computer Plataform" onClick={() => this.plataformClick(3)}>
                                 <img src="/assets/pc.png" alt=""/>
                             </div>
                         </div>
