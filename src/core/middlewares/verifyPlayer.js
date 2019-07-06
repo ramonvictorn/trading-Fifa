@@ -11,7 +11,7 @@ module.exports = function(req,res,next){
         return;
     }
 
-    verifyPlayeModel(req.body,(dataReturned)=>{
+        verifyPlayeModel(req.body,(dataReturned)=>{
         if(dataReturned.error){
             res.status(400).send({error:'ERRON_ON_VERIFY_PLAYER'})
             return;
@@ -26,7 +26,7 @@ module.exports = function(req,res,next){
             addPlayerModel(req.body,(dataReturned)=>{
                 if(dataReturned.error){
                     res.status(400).send({error:'ERRON_ON_ADD_PLAYER'})
-                    return;
+                    return true;
                 }
 
                 players[req.body.futbinId] = dataReturned.data.idPlayer;

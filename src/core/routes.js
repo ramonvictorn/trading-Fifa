@@ -14,10 +14,12 @@ const isLoggedController = require('./controllers/isLogged.js');
 const getRankingVariationLowPriceControler = require('./controllers/getRankingVariationLowPrice.js');
 const logoutController = require('./controllers/logout.js');
 const getPricesController = require('./controllers/getPrices.js');
+const getWalletController = require('./controllers/getWallet.js');
 //middlewares
 const checkParamsMid = require('./middlewares/checkParams.js');
 const verifyPlayer = require('./middlewares/verifyPlayer.js');
 const verifyPriceMid = require('./middlewares/verifyPrice.js');
+const verifySession = require('./middlewares/verifySession.js');
 let contador = 1
 
 function init(app){
@@ -42,6 +44,7 @@ function init(app){
     })
 
     app.post('/players/addPricePlayer', checkParamsMid, verifyPlayer, verifyPriceMid);
-    app.post('/getRankingVariationLowPrice', getRankingVariationLowPriceControler);
-    app.post('/player/getPrices', getPricesController);
+    app.post('/getRankingVariationLowPrice', verifySession, getRankingVariationLowPriceControler);
+    app.post('/player/getPrices',verifySession, getPricesController);
+    app.post('/user/getWallet', verifySession, getWalletController);
 }

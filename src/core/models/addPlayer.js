@@ -24,6 +24,7 @@ function addPlayer(context,cb){
     db.query(queryString, queryValues, (err,res)=>{   
         if(err){
             cb({error:'ERROR_ON_ADD_PLAYER'})
+            return true;
         }else{
             cb({data:res.rows[0]})
         }
