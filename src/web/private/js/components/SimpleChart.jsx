@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import echarts from 'echarts';
 
 class Market extends React.Component{
+    constructor() {
+        super();    
+        this.state = {};    
+    }
     componentDidMount(){
         let myCharts = echarts.init(document.getElementById(this.props.chartId));
         this.renderChart();
@@ -11,6 +15,7 @@ class Market extends React.Component{
         // if(this.props.renderChart == 'teste')  {
         //     console.log('teste')
         // }
+        console.log(this.props)
 
     }
     getData(){
@@ -28,7 +33,7 @@ class Market extends React.Component{
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                console.log('prices recebidos,', this.serverAns.data)
+                // console.log('prices recebidos,', this.serverAns.data)
             }
         });
     }

@@ -44,13 +44,15 @@ class Market extends React.Component{
         });
     }
 
-    handleClick(id, position) {
+    handleClick(id, index) {
         if (document.getElementById(id).classList.contains('active')) {
             document.getElementById(id).classList.remove('active')
         }  else { 
             document.getElementById(id).classList.add('active');
             this.setState({renderChart: Math.random()})
             this.renderChart = this.state.renderChart;
+            // this.setState(this.state.lista[index].show = true);
+            console.log(this.state.lista[index])
         }
         //
     }
