@@ -145,3 +145,11 @@ h1 {
   font-size: 24px;
 }
 
+.top-line-body>.red-variation {
+  color: red;
+}
+
+.top-line-body>.green-variation {
+  color: green;
+}
+

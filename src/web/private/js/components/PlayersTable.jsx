@@ -64,6 +64,15 @@ class Market extends React.Component{
         return true;
     }
 
+    getVariation(variation) {
+        var variationDiv = '';
+        var variationColor = 'column-variation green-variation';
+        if(variation < 0) {
+            var variationColor = 'column-variation red-variation';
+        }
+        return variationDiv = <div className={variationColor}><span>{variation}</span></div>
+    }
+
     render(){
         let tableItens;
         if(!this.state.lista) {
@@ -84,6 +93,7 @@ class Market extends React.Component{
                 }
                 >
             {this.state.lista.map((object, index) => (
+                
                 <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
                     <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
                         <div className="column-number"><span>{object.idPlayer}</span></div>
@@ -94,7 +104,7 @@ class Market extends React.Component{
                         <div className="column-actual-price"><span>R${object.lastPrice.toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.lowerPriceLastDay.toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.higherPriceLastDay.toLocaleString("pt-BR")}</span></div>
-                        <div className="column-variation"><span>{object.variationLowPrice}</span></div>
+                        {this.getVariation(object.variationLowPrice)}
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">
