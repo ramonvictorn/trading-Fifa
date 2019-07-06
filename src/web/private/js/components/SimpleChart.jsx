@@ -5,10 +5,11 @@ import Loader from 'react-loader-spinner';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {};    
+        this.state = {chartDataDay: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], chartDataPrice: [820, 932, 901, 934, 1290, 1330, 1320]};    
     }
     componentDidMount(){
         let myCharts = echarts.init(document.getElementById(this.props.chartId));
+        
         this.renderChart();
     }
     getData(){
@@ -19,7 +20,7 @@ class Market extends React.Component{
             contentType: 'application/json',
             data: JSON.stringify({
                 "idPlatform": 1,
-                "idPlayer": 1,
+                "idPlayer": this.props.playerId,
                 "month":  6 ,//OPCIONAL -> SE NÃO ENVIAR ELE USA O MÊS ATUAL
                 "year": 2019,//OPCIONAL -> SE NÃO ENVIAR ELE USA O ANO ATUAL  
             }),
@@ -28,9 +29,22 @@ class Market extends React.Component{
             complete: () => {
                 
                 this.setState({dataPrices: this.serverAns.data})
-                console.log('prices recebidos,', this.state.dataPrices)
+                this.trueChartData();
             }
         });
+    }
+
+    trueChartData(){
+        var prices = [];
+        var days = [];
+        console.log(this.state.dataPrices)
+        this.state.dataPrices.forEach(e => {
+            prices.push(e.price)
+            days.push(e.day)
+        });
+
+        this.setState({chartDataDay: days, chartDataPrice: prices})
+        this.renderChart();
     }
 
     componentWillReceiveProps(newProps) {
@@ -41,6 +55,9 @@ class Market extends React.Component{
                 this.chart.resize();
             }, 500);
         }
+        setTimeout(() => {
+            this.chart.resize();
+        }, 500);
       }
 
     componentWillUnmount() {
@@ -59,7 +76,7 @@ class Market extends React.Component{
                 color: ['#823eef'],
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    data: this.state.chartDataDay,
                     axisTick: {
                         show: false
                     },
@@ -76,7 +93,7 @@ class Market extends React.Component{
             
                     axisLabel: {
                         interval: 0,
-                        rotate: 40
+                        rotate: 0
                     }
                 },
                 yAxis: {
@@ -97,7 +114,7 @@ class Market extends React.Component{
                     }
                 },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: this.state.chartDataPrice,
                     type: 'line' ,
                     areaStyle: {}
                 }]

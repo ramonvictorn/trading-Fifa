@@ -98,7 +98,7 @@ class Market extends React.Component{
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">
-                        <SimpleChart show={this.state.lista[index].show} chartId={object.idPlayer+'b'}></SimpleChart> 
+                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={object.idPlayer+'b'}></SimpleChart> 
                     </div>
                 </div>
               )
