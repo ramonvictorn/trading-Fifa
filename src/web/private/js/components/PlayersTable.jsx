@@ -7,7 +7,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {plataform: 1, offsetInicial: 11, showMoreData: true};    
+        this.state = {plataform: 1, offsetInicial: 11, showMoreData: true, loaderButtonShowMore: false};    
     }
     componentDidMount(){
         this.props.lista.map(function(player) {
@@ -53,7 +53,8 @@ class Market extends React.Component{
                     this.setState({ps4Lista:this.state.lista});
                 } else if(firstCharge && idPlataform == 3) {
                     this.setState({pcLista:this.state.lista});
-                }                 
+                }    
+                this.setState({loaderButtonShowMore: false})       
             }
         });
     }
@@ -141,9 +142,12 @@ class Market extends React.Component{
         
     }
 
-    getMoreData(idPlataform, offsetInicial, qtde, firstCharge, tela, ){
+    getMoreData(idPlataform, pontoInicial, qtde, firstCharge, tela){
         this.setState({loaderButtonShowMore: true})
-        this.getList(idPlataform, offsetInicial, qtde, firstCharge, tela, ()=>{this.setState({loaderButtonShowMore: false})});
+        let soma  = pontoInicial +11;
+        console.log(pontoInicial)
+        this.getList(idPlataform, pontoInicial, qtde, firstCharge, tela);
+        this.setState({offsetInicial: soma})
     }
 
     
@@ -189,8 +193,14 @@ class Market extends React.Component{
               )
             )}</div>
 
-            if(this.state.showMoreData && this.state.loaderButtonShowMore) {
+            console.log(this.state.loaderButtonShowMore)
+
+            if(this.state.showMoreData && !this.state.loaderButtonShowMore) {
                 showMoreDataButton = <div className="linha-show-more"><div onClick={() => this.getMoreData(this.state.plataform, this.state.offsetInicial, '10', true, this.props.tela)} className="show-more-data-btn">Mais jogadores</div></div>    
+            }
+
+            if (this.state.loaderButtonShowMore){
+                showMoreDataButton = <div className="loader-btn-show"><Loader type="Triangle" color="#663ab5" height={40} width={40} /></div>;
             }
             
         }
