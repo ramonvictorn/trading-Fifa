@@ -1,6 +1,6 @@
 module.exports = function(req,res,next){
     if(!verifyParams(req.body)){
-        res.status(400).send({error:"INVALID_PARAMS"})
+        res.status(200).send({error:"INVALID_PARAMS"})
         return;
     }
     next();
