@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import SimpleChart from '../components/SimpleChart.jsx';
 import PageNavigation from '../components/PageNavigation.jsx';
 import PlayersTable from '../components/PlayersTable.jsx';
 
@@ -24,7 +23,7 @@ class Market extends React.Component{
         return(
             <React.Fragment>
                 <PageNavigation cbSetState={this.props.cbSetState}></PageNavigation>
-                <PlayersTable lista={this.state.lista}></PlayersTable>
+                <PlayersTable lista={this.state.lista} tela="mercado"></PlayersTable>
             </React.Fragment>
         )
     }

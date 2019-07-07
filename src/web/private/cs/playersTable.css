@@ -9,7 +9,6 @@
     margin-top: 100px;
     flex: 1;
     flex-direction: column;
-    padding-bottom: 50px;
     position: relative;
 }
 
@@ -73,14 +72,14 @@
     display: flex;
     cursor: pointer;
     position: relative;
-    height: 75px;
+    height: 100px;
 }
 
 .icon {
     position: absolute;
     right: 20px;
     font-size: 19px!important;
-    top: 20px;
+    top: 30px;
     transform: rotate(180deg);
     transition: .5s;
 }
