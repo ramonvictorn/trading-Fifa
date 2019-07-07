@@ -13,10 +13,10 @@ class Market extends React.Component{
         this.props.lista.map(function(player) {
         })
         this.renderChart = this.state.renderChart;
-        this.getList(this.state.plataform, '0', '10');
+        this.getList(this.state.plataform, '0', '10', true);
     }
 
-    getList(idPlataform, offset, qtd) {
+    getList(idPlataform, offset, qtd, firstCharge) {
         $.ajax({
             url: '/getRankingVariationLowPrice',
             dataType: 'json',
@@ -30,14 +30,15 @@ class Market extends React.Component{
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                console.log(this.serverAns.data)
+                console.log(idPlataform)
                 this.setState({lista:this.serverAns.data});
-
-                // if(this.serverAns.data){
-                //     this.props.callback(true);
-                // }else{
-                //     this.props.callback(false);
-                // }
+                if(firstCharge && idPlataform == 1) {
+                    this.setState({xBoxLista:this.state.lista});
+                } else if(firstCharge && idPlataform == 2) {
+                    this.setState({ps4Lista:this.state.lista});
+                } else if(firstCharge && idPlataform == 3) {
+                    this.setState({pcLista:this.state.lista});
+                }
             }
         });
     }
@@ -69,15 +70,35 @@ class Market extends React.Component{
         if(variation < 0) {
             var variationColor = 'column-variation red-variation';
         }
-        return variationDiv = <div className={variationColor}><span>{variation}</span></div>
+        return variationDiv = <div className={variationColor}><span className="arrow-icon">^</span><span>{variation}%</span></div>
     }
 
     plataformClick(res) {
-        this.setState({plataform: res})
         this.setState({lista: null})
-        this.getList(this.state.plataform, '0', '10');
+        console.log('xbox: ', this.state.xBoxLista, 'ps4: ', this.state.ps4Lista, 'pc: ', this.state.pcLista)
+        this.setState({plataform: res}, ()=> {this.arrayCache(res)})
+        
+        
     }
 
+    arrayCache(res) {
+        if(res == 1) {
+            this.setState({lista: this.state.xBoxLista})
+        }
+
+        if(res == 2 && this.state.ps4Lista) {
+            this.setState({lista: this.state.ps4Lista})
+        } else if(res == 2 && !this.state.ps4Lista) {
+            this.getList(this.state.plataform, '0', '10', true);
+        }
+
+        if(res == 3 && this.state.pcLista) {
+            this.setState({lista: this.state.pcLista})
+        } else if(res == 3 && !this.state.pcLista) {
+            this.getList(this.state.plataform, '0', '10', true);
+        }
+        
+    }
     render(){
         let tableItens;
         let ps4Class = 'ps4-option';
@@ -95,7 +116,7 @@ class Market extends React.Component{
         if(!this.state.lista || this.state.lista == null) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else if  (this.isEmpty(this.state.lista)){
-            tableItens = <div className="no-data-found">No data found</div>
+            tableItens = <div className="no-data-found">Reclama com o backend</div>
         }else {
             tableItens = 
             <InfiniteScroll

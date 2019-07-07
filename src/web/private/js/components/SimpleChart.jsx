@@ -144,7 +144,7 @@ class Market extends React.Component{
         var chartLoader = <div className="chart-loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         if(this.state.dataPrices) {
             if(this.state.dataPrices.length == 0) {
-                chartLoader = <div className="chart-loader"><span style={{color: 'white', fontFamily: 'monospace'}}>No data Found</span></div>;
+                chartLoader = <div className="chart-loader"><span style={{color: 'white', fontFamily: 'monospace'}}>Reclama com o backend</span></div>;
             }
             if(this.state.dataPrices.length > 0) {
                 chartLoader = '';

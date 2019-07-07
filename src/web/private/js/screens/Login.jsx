@@ -14,7 +14,7 @@ class Login extends Component{
     
     render(){
         if(this.props.isLogged == true){
-            this.props.history.push('/market')
+            this.props.history.push('/Mercado')
         }
         return(
             <React.Fragment>

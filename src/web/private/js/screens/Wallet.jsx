@@ -36,7 +36,7 @@ class Wallet extends React.Component{
         return(
             <React.Fragment>
                 <PageNavigation></PageNavigation>
-                <h1>Wallet</h1>
+                <h1>Carteira</h1>
             </React.Fragment>
         )
     }

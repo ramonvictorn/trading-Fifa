@@ -65,8 +65,8 @@ class AppRoutes extends Component{
         return(
             <Router>    
                 <Switch>
-                    <PrivateRoute path='/wallet' component={WalletView} cbSetState={this.cbSetState} isLogged={this.state.isLogged} history={history}/>
-                    <PrivateRoute path='/market' component={MarketView} cbSetState={this.cbSetState} isLogged={this.state.isLogged}/>
+                    <PrivateRoute path='/Carteira' component={WalletView} cbSetState={this.cbSetState} isLogged={this.state.isLogged} history={history}/>
+                    <PrivateRoute path='/Mercado' component={MarketView} cbSetState={this.cbSetState} isLogged={this.state.isLogged}/>
                     <Route path='/' component={(props)=> (<LoginView {...props} cbSetState={this.cbSetState} isLogged={isLogged}/>)}/>
                 </Switch>
             </Router>
