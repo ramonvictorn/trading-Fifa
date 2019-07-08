@@ -15,6 +15,9 @@ const getRankingVariationLowPriceControler = require('./controllers/getRankingVa
 const logoutController = require('./controllers/logout.js');
 const getPricesController = require('./controllers/getPrices.js');
 const getWalletController = require('./controllers/getWallet.js');
+const addNewDataOnWalletController = require('./controllers/addNewDataOnWallet.js');
+const deleteDataOnWalletController = require('./controllers/deleteDataWallet.js');
+const getLastPlatformPriceController = require('./controllers/getLastPlatformPrice.js');
 //middlewares
 const checkParamsMid = require('./middlewares/checkParams.js');
 const verifyPlayer = require('./middlewares/verifyPlayer.js');
@@ -28,7 +31,7 @@ function init(app){
         contador++
         res.send('Ping' + Date.now())
     })
-    // app.post('/players/getAllPlayers', verifyPlayers, getAllPlayersController);
+    app.post('/players/getAllPlayers', getAllPlayersController);
     // app.post('/players/getPlayer',verifyPlayers,  getPlayerController);
     // app.post('/players/addPlayer', addPlayerController);
     // app.post('/players/addPricePlayer', verifyPlayers);
@@ -47,4 +50,7 @@ function init(app){
     app.post('/getRankingVariationLowPrice', verifySession, getRankingVariationLowPriceControler);
     app.post('/player/getPrices',verifySession, getPricesController);
     app.post('/user/getWallet', verifySession, getWalletController);
+    app.post('/user/addDataOnWallet', verifySession , addNewDataOnWalletController);
+    app.post('/user/deleteDataOnWallet', verifySession , deleteDataOnWalletController);
+    app.post('/player/getLastPrice', verifySession, getLastPlatformPriceController)
 }

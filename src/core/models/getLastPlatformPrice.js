@@ -42,27 +42,3 @@ const db = require('../../db.js')
         })
     }
     
-    
-    function teste (){
-        db.initDb(()=>{
-            let context = {
-                idPlayer:3
-    
-            }
-            console.log('teste getPlayers')
-            let queryString = `select
-                id_player as "idPlayer",
-                id_futbin as "idFutbin",
-                name,
-                category,
-                details
-                FROM players
-                WHERE id_player = ${context.idPlayer};`
-    
-            db.query(queryString,(err,res)=>{
-                console.log('cb do prices', res.rows)
-            })
-        })
-        
-    }
-    // teste()

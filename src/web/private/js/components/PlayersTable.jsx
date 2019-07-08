@@ -152,6 +152,7 @@ class Market extends React.Component{
 
     
     render(){
+        console.log('rende table ', this.state.lista);
         let tableItens;
         let showMoreDataButton;
         let ps4Class = 'ps4-option';
@@ -171,7 +172,7 @@ class Market extends React.Component{
         } else if  (this.isEmpty(this.state.lista)){
             tableItens = <div className="no-data-found">Reclama com o backend</div>
         }else {
-            tableItens =<div>{this.state.lista.map((object, index) => (
+            tableItens =<div>{(this.state.lista || []).map((object, index) => (
                 
                 <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
                     <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
