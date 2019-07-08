@@ -24,6 +24,7 @@ function getWallet(context,cb){
         p.details,
         wallets.id_platform as "idPlatform",
         wallets.price as "userPrice",
+        wallets.id_buy as "idBuy",
         wallets.date_inserted as "dateInserted"
     FROM 
         wallets 
@@ -37,11 +38,7 @@ function getWallet(context,cb){
         if(err){
             cb({error:'ERROR_ON_GET_WALLET'})
         }else{
-            if(res.rows.length == 1){
-                cb({data:res.rows[0]})
-            }else{
-                cb({data:res.rows})
-            }
+            cb({data:res.rows})
         }
         
     })
