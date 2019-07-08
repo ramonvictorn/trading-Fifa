@@ -31,7 +31,7 @@ function getRankingVariationLowPrice(context,cb){
         players as p ON p.id_player = analyzed.id_player 
     WHERE 
         analyzed.id_platform = $1 AND analyzed.day = $2 AND analyzed.month = $3 AND analyzed.year = $4
-    ORDER by analyzed.variation_low_price asc limit $5 offset $6 ROWS`;
+    ORDER by analyzed.variation_low_price asc, analyzed.date_inserted asc limit $5 offset $6 ROWS`;
 
     db.query(queryString, queryValues, (err,res)=>{   
         if(err){

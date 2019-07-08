@@ -94,7 +94,7 @@ CREATE TABLE wallets (
 	CONSTRAINT buy_pk PRIMARY KEY (id_buy))WITH (OIDS=FALSE) ;
 
 --INSERT INTO wallets (id_user,id_player,id_platform,price,date_inserted,details) values (25,24,1,1500,now(),'{}');
-	
+-- DELETE FROM wallets WHERE id_user = 25;
 	--select * from analyzed where id_platform = 1 and day = 12 and "month" = 6 and "year" = 2019
 	-- INSERT INTO analyzed (id_player, id_platform,) VALUES ();
 	   --SELECT * FROM analyzed
@@ -117,7 +117,7 @@ CREATE TABLE wallets (
 	--INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Ramon Victor', 'ramon.victor','cb7fcdd51aa0623013ed7ac3b666672b100ac08de7d0de22e88a0210eea9fae9', '{}', now());   
 	--INSERT INTO users (name,login, password,details, date_inserted) VALUES ('Caetano Sasia', 'caetano.sasia','f49de99820177aab9480f60cf90b137a3cf23474d3a191c8921041f9559e893a', '{}', now());   
 
-
+-- update prices set day = 6 where day = 7
 -- 	update  analyzed 
 -- 	set variation_low_price = 45,
 --         variation_high_price = -14.47,

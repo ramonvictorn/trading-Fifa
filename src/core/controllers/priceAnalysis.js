@@ -15,7 +15,7 @@ function priceAnalysis(params,cb){
                     if(hightPrice != undefined){
                         calculatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
-                                console.log('percentagem is ', dataReturned);
+                                // console.log('percentagem is ', dataReturned);
                         })
                     }
                 });
@@ -25,7 +25,7 @@ function priceAnalysis(params,cb){
                     if(lowPrice != undefined){
                         calculatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
-                                console.log('percentagem is ', dataReturned);
+                                // console.log('percentagem is ', dataReturned);
                         })
                     }
                 })
@@ -38,7 +38,7 @@ function priceAnalysis(params,cb){
                     if(hightPrice != undefined){
                         updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
-                                console.log('percentagem is ', dataReturned);
+                                // console.log('percentagem is ', dataReturned);
                         })
                     }
                 });
@@ -48,7 +48,7 @@ function priceAnalysis(params,cb){
                     if(lowPrice != undefined){
                         updatePercentage({lowPrice,hightPrice,...params},
                             (dataReturned)=>{
-                                console.log('percentagem is ', dataReturned);
+                                // console.log('percentagem is ', dataReturned);
                         })
                     }
                 })
