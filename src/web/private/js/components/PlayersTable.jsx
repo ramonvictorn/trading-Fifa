@@ -196,7 +196,10 @@ class Market extends React.Component{
             console.log(this.state.loaderButtonShowMore)
 
             if(this.state.showMoreData && !this.state.loaderButtonShowMore) {
-                showMoreDataButton = <div className="linha-show-more"><div onClick={() => this.getMoreData(this.state.plataform, this.state.offsetInicial, '10', true, this.props.tela)} className="show-more-data-btn">Mais jogadores</div></div>    
+                showMoreDataButton = <div className="linha-show-more">
+                                        <div onClick={() => this.getMoreData(this.state.plataform, this.state.offsetInicial, '10', true, this.props.tela)} 
+                                        className="show-more-data-btn">Mais jogadores</div>
+                                    </div>    
             }
 
             if (this.state.loaderButtonShowMore){
