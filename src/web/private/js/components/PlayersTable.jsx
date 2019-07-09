@@ -7,7 +7,17 @@ import InfiniteScroll from 'react-infinite-scroller';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {plataform: 1, offsetInicial: 11, showMoreData: true, loaderButtonShowMore: false, modal: {show:false, idPlayer: 'id', namePlayer: 'name'}};    
+        this.state = {
+            plataform: 1, 
+            offsetInicial: 11, 
+            showMoreData: true, 
+            loaderButtonShowMore: false, 
+            modal: {
+                show:false, 
+                idPlayer: 'id', 
+                namePlayer: 'name'
+            }
+        };    
     }
     
     componentDidMount(){
@@ -18,7 +28,6 @@ class Market extends React.Component{
     }
     
     getList(idPlataform, offset, qtd, firstCharge, tela) {
-        // tela = tela.toUpperCase();
         if(tela == 'mercado') {
            this.getMarketList(idPlataform, offset, qtd, firstCharge);
         } else if (tela == 'carteira'){
@@ -69,6 +78,7 @@ class Market extends React.Component{
     }
 
     getWalletList(idPlataform, offset, qtd, firstCharge) {
+        console.log('start getWallet')
         $.ajax({
             url: '/user/getWallet',
             dataType: 'json',
@@ -82,7 +92,10 @@ class Market extends React.Component{
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                console.log('exemplo de getWallet -> ' ,this.serverAns.data)
+                if(this.serverAns.data.length == 0){
+                    this.setState({lista: this.serverAns.data})
+                    return;
+                }
                 this.serverAns.data.forEach((e, i) => {
                     let serverAns2 = {};
                     var count = 0;
@@ -100,9 +113,7 @@ class Market extends React.Component{
                         error: (err) => { serverAns2 = err.responseJSON },
                         complete: () => {
                             e.price = serverAns2.data.price;
-                            // if(count++ == this.serverAns.data.length-1) {
-                                this.setState({lista: this.serverAns.data})
-                            // }
+                            this.setState({lista: this.serverAns.data})
                         }
                     });
                     
@@ -128,7 +139,6 @@ class Market extends React.Component{
             this.state.lista[index].show = true
             
         }
-        //
     }
 
     isEmpty(obj) {
@@ -254,6 +264,7 @@ class Market extends React.Component{
         if(this.state.plataform == 3) {
             pcClass = 'ps4-option active';
         }
+        console.log('antes do if ', this.state.lista)
         if(!this.state.lista || this.state.lista == null) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else if  (this.isEmpty(this.state.lista)){

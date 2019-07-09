@@ -45,7 +45,6 @@ class Wallet extends React.Component{
             success: (ans) => { serverAns = ans; },
             error: (err) => { serverAns = err.responseJSON },
             complete: () => {
-               console.log('GET ALL PLAYERS -> ', serverAns);
                this.setState({listaPlayers: serverAns.data});
             }
         });
@@ -77,7 +76,8 @@ class Wallet extends React.Component{
                 success: (ans) => { serverAns = ans; },
                 error: (err) => { serverAns = err.responseJSON },
                 complete: () => {
-                   console.log('GET ALL PLAYERS -> ', serverAns);
+                   console.log('addDataOnWallet -> ', serverAns);
+                   this.setState({lista:[]})
                 }
             });
         } else {
