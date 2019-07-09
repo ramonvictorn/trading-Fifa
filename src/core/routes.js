@@ -31,7 +31,7 @@ function init(app){
         contador++
         res.send('Ping' + Date.now())
     })
-    app.post('/players/getAllPlayers', getAllPlayersController);
+    app.post('/players/getAllPlayers',verifySession, getAllPlayersController);
     // app.post('/players/getPlayer',verifyPlayers,  getPlayerController);
     // app.post('/players/addPlayer', addPlayerController);
     // app.post('/players/addPricePlayer', verifyPlayers);

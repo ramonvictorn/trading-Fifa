@@ -110,7 +110,7 @@ class Wallet extends React.Component{
         return(
             // campos da tabela = jogador , preço pago, preço atual variação
             <React.Fragment>
-                <PageNavigation></PageNavigation>
+                <PageNavigation cbSetState={this.props.cbSetState}></PageNavigation>
                 <button onClick={()=>this.addRegistroWallet()}>ADICIONAR REGISTRO</button>
                 Selecione um jogador:
                 <ChoicePlayer listaPlayers={this.state.listaPlayers}></ChoicePlayer>
