@@ -14,8 +14,26 @@ class Market extends React.Component{
         })
         this.renderChart = this.state.renderChart;
         this.getList(this.state.plataform, '0', '10', true, this.props.tela);
+    }
 
-        
+    getLastPrice(player){
+        let serverAns = {};
+        let dados = {
+            "idPlayer": player.idPlayer, //pegar
+	        "idPlatform": this.state.plataform //pegar
+        }
+        $.ajax({
+            url: '/player/getLastPrice',
+            dataType: 'json',
+            type: 'post',
+            data: JSON.stringify(dados),
+            contentType: 'application/json',
+            success: (ans) => { serverAns = ans; },
+            error: (err) => { serverAns = err.responseJSON },
+            complete: () => {
+               console.log('getLatPrice -> ', serverAns);
+            }
+        });
     }
 
     getList(idPlataform, offset, qtd, firstCharge, tela) {
@@ -73,7 +91,7 @@ class Market extends React.Component{
             success: (ans) => { this.serverAns = ans; },
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
-                // console.log('exemplo de getWallet -> ' ,this.serverAns.data)
+                console.log('exemplo de getWallet -> ' ,this.serverAns.data)
                 this.setState({lista:this.serverAns.data});
                 if(firstCharge && idPlataform == 1) {
                     this.setState({xBoxLista:this.state.lista});
@@ -105,6 +123,15 @@ class Market extends React.Component{
         }
     
         return true;
+    }
+
+    getVariationWallet(precoPago, precoPlayer) {
+        var variationDiv = '';
+        var variationColor = 'column-variation green-variation';
+        if(5 < 0) {
+            var variationColor = 'column-variation red-variation';
+        }
+        return variationDiv = <div className={variationColor}><span className="arrow-icon">^</span><span>5%</span></div>
     }
 
     getVariation(variation) {
@@ -143,19 +170,24 @@ class Market extends React.Component{
     }
 
     getMoreData(idPlataform, pontoInicial, qtde, firstCharge, tela){
-        this.setState({loaderButtonShowMore: true})
         let soma  = pontoInicial +11;
-        console.log(pontoInicial)
-        this.getList(idPlataform, pontoInicial, qtde, firstCharge, tela);
-        this.setState({offsetInicial: soma})
+        let offset = pontoInicial;
+        this.setState({loaderButtonShowMore: true, offsetInicial: soma})
+        this.getList(idPlataform, offset, qtde, firstCharge, tela);
     }
 
     
     render(){
-        console.log('rende table ', this.state.lista);
+        console.log('rende table ', this.props.tela);
         let tableItens;
         let showMoreDataButton;
         let ps4Class = 'ps4-option';
+        let item1Tabela;
+        let item2Tabela;
+        let item3Tabela;
+        let item4Tabela;
+        let item5Tabela;
+        let item6Tabela;
         if(this.state.plataform == 2) {
             ps4Class = 'ps4-option active';
         }
@@ -171,7 +203,15 @@ class Market extends React.Component{
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else if  (this.isEmpty(this.state.lista)){
             tableItens = <div className="no-data-found">Reclama com o backend</div>
-        }else {
+        }else if(this.state.lista && this.props.tela == 'mercado'){
+            item1Tabela = '#';
+            item2Tabela = 'Jogador';
+            item3Tabela = 'Preço atual';
+            item4Tabela = 'Menor preço (24h)';
+            item5Tabela = <div className="header-column-price"><span>Maior preço (24h)</span></div>;
+            item6Tabela = 'Variação (24h)';
+            
+
             tableItens =<div>{(this.state.lista || []).map((object, index) => (
                 
                 <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
@@ -207,6 +247,36 @@ class Market extends React.Component{
                 showMoreDataButton = <div className="loader-btn-show"><Loader type="Triangle" color="#663ab5" height={40} width={40} /></div>;
             }
             
+        } else if(this.state.lista && this.props.tela == "carteira") {
+            item1Tabela = '#';
+            item2Tabela = 'Jogador';
+            item3Tabela = 'Preço atual';
+            item4Tabela = 'Preço pago';
+            item5Tabela = '';
+            item6Tabela = 'Variação (24h)';
+            
+            tableItens =<div>{(this.state.lista || []).map((object, index) => (
+                
+                <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
+                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
+                        <div className="column-number" title={object.idPlayer}><span>{object.idPlayer}</span></div>
+                        <div className="column-player">
+                            <img className="img-player" src="/assets/bola.png" alt="img player"/>
+                            <span title={object.name}>{object.name}</span>
+                            </div>
+                            {/* {object.lastPrice.toLocaleString("pt-BR")} */}
+                        <div className="column-actual-price"><span>R$</span></div>
+                        <div className="column-price"><span>R${object.userPrice.toLocaleString("pt-BR")}</span></div>
+                        {this.getVariationWallet(object.variationLowPrice)}
+                        <div className="icon">^</div>
+                        </div>
+                    <div className="chart-space">
+                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={object.idPlayer+'b'}></SimpleChart> 
+                    </div>
+                </div>
+              )
+            )}</div>
+            
         }
         return(
             <React.Fragment>
@@ -224,12 +294,12 @@ class Market extends React.Component{
                             </div>
                         </div>
                         <div className="table-header">
-                            <div className="header-column-number column-number"><span>#</span></div>
-                            <div className="header-column-player"><span>Jogador</span></div>
-                            <div className="header-column-actual-price"><span>Preço atual</span></div>
-                            <div className="header-column-price"><span>Menor preço (24h)</span></div>
-                            <div className="header-column-price"><span>Maior preço (24h)</span></div>
-                            <div className="header-column-variation"><span>Variação (24h)</span></div>
+                            <div className="header-column-number column-number"><span>{item1Tabela}</span></div>
+                            <div className="header-column-player"><span>{item2Tabela}</span></div>
+                            <div className="header-column-actual-price"><span>{item3Tabela}</span></div>
+                            <div className="header-column-price"><span>{item4Tabela}</span></div>
+                            {item5Tabela}
+                            <div className="header-column-variation"><span>{item6Tabela}</span></div>
                         </div>
                         {tableItens}
                         {showMoreDataButton}

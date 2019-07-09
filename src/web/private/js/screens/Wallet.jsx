@@ -14,26 +14,26 @@ class Wallet extends React.Component{
         };   
     }
 
-    getMyWallet(){
-        let serverAns = {};
-        $.ajax({
-            url: '/user/getWallet',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "idPlatform": 1 , //tu que passa
-                "offset": undefined, // se não passa ele pegar a partir do 0
-                "qtd": undefined, //se não passar ele pega tudo, acho que pode ser assim pra não dar muito trabalho e tal   
-            }),
-            success: (ans) => { this.serverAns = ans; },
-            error: (err) => { this.serverAns = err.responseJSON },
-            complete: () => {
-                console.log('exemplo de getWallet -> ' ,this.serverAns.data);
-                this.setState({listaWallet: serverAns.data});
-            }
-        });
-    }
+    // getMyWallet(){
+    //     let serverAns = {};
+    //     $.ajax({
+    //         url: '/user/getWallet',
+    //         dataType: 'json',
+    //         type: 'post',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify({
+    //             "idPlatform": 1 , //tu que passa
+    //             "offset": undefined, // se não passa ele pegar a partir do 0
+    //             "qtd": undefined, //se não passar ele pega tudo, acho que pode ser assim pra não dar muito trabalho e tal   
+    //         }),
+    //         success: (ans) => { this.serverAns = ans; },
+    //         error: (err) => { this.serverAns = err.responseJSON },
+    //         complete: () => {
+    //             console.log('exemplo de getWallet -> ' ,this.serverAns.data);
+    //             this.setState({listaWallet: serverAns.data});
+    //         }
+    //     });
+    // }
 
     getAllPlayers(){
         let serverAns = {};
@@ -51,7 +51,7 @@ class Wallet extends React.Component{
         });
     }
     componentDidMount(){
-        this.getMyWallet();
+        // this.getMyWallet();
         this.getAllPlayers();
     }
 
@@ -94,25 +94,6 @@ class Wallet extends React.Component{
             }
         });
     }
-    getLastPrice(){
-        let serverAns = {};
-        let dados = {
-            "idPlayer":"38", //pegar
-	        "idPlatform": "1" //pegar
-        }
-        $.ajax({
-            url: '/player/getLastPrice',
-            dataType: 'json',
-            type: 'post',
-            data: JSON.stringify(dados),
-            contentType: 'application/json',
-            success: (ans) => { serverAns = ans; },
-            error: (err) => { serverAns = err.responseJSON },
-            complete: () => {
-               console.log('getLatPrice -> ', serverAns);
-            }
-        });
-    }
     // usar o price e o last price nessa função
     getPercentagem(price,priceReference){
         return parseFloat((((price / priceReference) - 1) * 100).toFixed(2))
@@ -135,7 +116,7 @@ class Wallet extends React.Component{
                 <ChoicePlayer listaPlayers={this.state.listaPlayers}></ChoicePlayer>
                 Preço pago:
                 <input></input>
-                {/* <PlayersTable lista={this.state.lista} tela="carteira"></PlayersTable> */}
+                <PlayersTable lista={this.state.lista} tela="carteira"></PlayersTable>
             </React.Fragment>
         )
     }
