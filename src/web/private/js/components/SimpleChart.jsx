@@ -40,7 +40,7 @@ class Market extends React.Component{
         console.log(this.state.dataPrices)
         this.state.dataPrices.forEach(e => {
             prices.push(e.price)
-            days.push(e.day)
+            days.push('D: '+e.day+' H: '+e.hour+':'+e.minutes)
         });
 
         this.setState({chartDataDay: days, chartDataPrice: prices})
@@ -79,7 +79,7 @@ class Market extends React.Component{
                     formatter: function (params) {
                         const param = params[0];
                         const value = parseFloat(param.value).toLocaleString('pt-BR');
-                        const label = 'Dia: ' + param.axisValue + '<br />' + 'Mês: Julho' + '<br />' + param.marker + param.seriesName + ': R$' + value
+                        const label =  param.axisValue + '<br />' + 'Mês: Julho' + '<br />' + param.marker + param.seriesName + ': R$' + value
                         return label;
 
                     }
@@ -103,7 +103,7 @@ class Market extends React.Component{
             
                     axisLabel: {
                         interval: 0,
-                        rotate: 0
+                        rotate: 30
                     }
                 },
                 yAxis: {
