@@ -10,6 +10,7 @@ function login(req,res){
         login:req.body.login,
         password:req.body.password,
     }
+    console.log('Login -> ', context.login)
     loginModels(context,(ret)=>{
         console.log('oi cb ', ret)
         if(ret.error){
