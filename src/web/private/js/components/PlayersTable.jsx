@@ -21,13 +21,7 @@ class Market extends React.Component{
         if(tela == 'mercado') {
            this.getMarketList(idPlataform, offset, qtd, firstCharge);
         } else if (tela == 'carteira'){
-            this.getWalletList(idPlataform, offset, qtd, firstCharge, (idPlataform, firstCharge)=>{if(firstCharge && idPlataform == 1) {
-                this.setState({xBoxLista:this.state.lista});
-            } else if(firstCharge && idPlataform == 2) {
-                this.setState({ps4Lista:this.state.lista});
-            } else if(firstCharge && idPlataform == 3) {
-                this.setState({pcLista:this.state.lista});
-            }})
+            this.getWalletList(idPlataform, offset, qtd, firstCharge)
         }
     }
 
@@ -63,7 +57,7 @@ class Market extends React.Component{
         });
     }
 
-
+    
     getLastPrice(player){
         let serverAns = {};
         let dados = {
@@ -101,7 +95,13 @@ class Market extends React.Component{
             complete: () => {
                 console.log('exemplo de getWallet -> ' ,this.serverAns.data)
                 this.setState({lista:this.serverAns.data});
-                console.log(this.serverAns.data)
+                if(firstCharge && idPlataform == 1) {
+                    this.setState({xBoxLista:this.state.lista});
+                } else if(firstCharge && idPlataform == 2) {
+                    this.setState({ps4Lista:this.state.lista});
+                } else if(firstCharge && idPlataform == 3) {
+                    this.setState({pcLista:this.state.lista});
+                }
             }
         });
     }
