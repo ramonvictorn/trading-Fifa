@@ -160,12 +160,14 @@ class Market extends React.Component{
     }
 
     getVariationWallet(precoPago, precoPlayer) {
+        console.log('getVariationWallet ', precoPago, precoPlayer)
+        let per = parseFloat((((precoPago / precoPlayer) - 1) * 100).toFixed(2))
         var variationDiv = '';
         var variationColor = 'column-variation green-variation';
-        if(5 < 0) {
+        if(per < 0) {
             var variationColor = 'column-variation red-variation';
         }
-        return variationDiv = <div className={variationColor}><span className="arrow-icon">^</span><span>5%</span></div>
+        return variationDiv = <div className={variationColor}><span className="arrow-icon">^</span><span>{per}%</span></div>
     }
 
     getVariation(variation) {
@@ -354,7 +356,7 @@ class Market extends React.Component{
                             {/* {object.lastPrice.toLocaleString("pt-BR")} */}
                         <div className="column-actual-price"><span>R${(object.price || '').toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.userPrice.toLocaleString("pt-BR")}</span></div>
-                        {this.getVariationWallet(object.variationLowPrice)}
+                        {this.getVariationWallet(object.price,object.userPrice)}
                         <div className="icon icon-wallet">^</div>
                         <div className="remove-compra" onClick={(e) => this.deleteDataWalletModal(e, object.idBuy, object.name)}>Deletar</div>
                         </div>
