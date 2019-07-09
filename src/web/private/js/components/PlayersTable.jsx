@@ -22,7 +22,7 @@ class Market extends React.Component{
         if(tela == 'mercado') {
            this.getMarketList(idPlataform, offset, qtd, firstCharge);
         } else if (tela == 'carteira'){
-            this.getWalletList(idPlataform, offset, '20', firstCharge)
+            this.getWalletList(idPlataform, offset, '8', firstCharge)
         }
     }
 
@@ -60,23 +60,7 @@ class Market extends React.Component{
 
     
     getLastPrice(player, callback){
-        let serverAns = {};
-        let dados = {
-            "idPlayer": player.idPlayer, //pegar
-	        "idPlatform": this.state.plataform //pegar
-        }
-        $.ajax({
-            url: '/player/getLastPrice',
-            dataType: 'json',
-            type: 'post',
-            data: JSON.stringify(dados),
-            contentType: 'application/json',
-            success: (ans) => { serverAns = ans; },
-            error: (err) => { serverAns = err.responseJSON },
-            complete: () => {
-               callback(serverAns.data.price);
-            }
-        });
+        
         
     }
 
@@ -100,11 +84,28 @@ class Market extends React.Component{
             complete: () => {
                 console.log('exemplo de getWallet -> ' ,this.serverAns.data)
                 this.serverAns.data.forEach((e, i) => {
-                    e.price = this.getLastPrice(e, this.getPrice);
-                    console.log(this.getLastPrice(e, this.getPrice))
-                    if(i == this.serverAns.data.length-1) {
-                        this.setState({lista: this.serverAns.data})
+                    let serverAns2 = {};
+                    var count = 0;
+                    let dados = {
+                        "idPlayer": e.idPlayer, //pegar
+                        "idPlatform": this.state.plataform //pegar
                     }
+                    $.ajax({
+                        url: '/player/getLastPrice',
+                        dataType: 'json',
+                        type: 'post',
+                        data: JSON.stringify(dados),
+                        contentType: 'application/json',
+                        success: (ans) => { serverAns2 = ans; },
+                        error: (err) => { serverAns2 = err.responseJSON },
+                        complete: () => {
+                            e.price = serverAns2.data.price;
+                            // if(count++ == this.serverAns.data.length-1) {
+                                this.setState({lista: this.serverAns.data})
+                            // }
+                        }
+                    });
+                    
                 });
 
                 if(firstCharge && idPlataform == 1) {
@@ -206,7 +207,7 @@ class Market extends React.Component{
             complete: () => {
                console.log('deleteDataWallet -> ', serverAns);
                this.closeModal();
-               this.getWalletList(this.state.plataform, '0', '20', true, this.props.tela)
+               this.getWalletList(this.state.plataform, '0', '8', true, this.props.tela)
             }
         });
     }
@@ -331,7 +332,7 @@ class Market extends React.Component{
                             <span title={object.name}>{object.name}</span>
                             </div>
                             {/* {object.lastPrice.toLocaleString("pt-BR")} */}
-                        <div className="column-actual-price"><span>R$</span></div>
+                        <div className="column-actual-price"><span>R${(object.price || '').toLocaleString("pt-BR")}</span></div>
                         <div className="column-price"><span>R${object.userPrice.toLocaleString("pt-BR")}</span></div>
                         {this.getVariationWallet(object.variationLowPrice)}
                         <div className="icon icon-wallet">^</div>
