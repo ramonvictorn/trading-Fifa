@@ -116,7 +116,6 @@ class Wallet extends React.Component{
             <React.Fragment>
                 <PageNavigation cbSetState={this.props.cbSetState}></PageNavigation>
                 <div className="add-player">
-                    <button onClick={()=>this.addRegistroWallet()}>ADICIONAR REGISTRO</button>
                     <span className="add-player-span">Selecione um jogador:</span>
                     <select id="testeselect" className="drop" name="choicePlayer">
                         {optionSelect}
@@ -128,7 +127,9 @@ class Wallet extends React.Component{
                         <option value="3">PC</option>
                     </select>
                     <span className="add-player-span">Preço pago:</span>
-                    <input id="priceplayer" className="input-custom" type="number"></input>
+                    <input id="priceplayer" className="input-custom" type="number"></input> 
+                    <button className="btn-submit" onClick={()=>this.addRegistroWallet()}>ADICIONAR REGISTRO</button>
+                    
                 </div>
                 
                 <PlayersTable lista={this.state.lista} tela="carteira"></PlayersTable>

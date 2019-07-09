@@ -328,6 +328,21 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
   transition: .3s;
 }
 
+.btn-submit {
+  padding: 10px;
+  border: none;
+  margin-left: 15px;
+  border-radius: 10px;
+  color: white;
+  transition: .3s;
+  cursor: pointer;
+  border: 1px solid #6131ad;
+  background-color: transparent;
+}
+
+.btn-submit:hover {
+  color: #e2cdcd;
+}
 .modal-sim:hover {
   background-color: #942626;
 }
