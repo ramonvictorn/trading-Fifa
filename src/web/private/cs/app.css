@@ -80,7 +80,7 @@ h1 {
 .form {
   position: relative;
   z-index: 1;
-  background: #ffffffe6;
+  background: white;
   max-width: 360px;
   padding: 45px;
   text-align: center;
