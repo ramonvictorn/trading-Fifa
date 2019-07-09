@@ -19,6 +19,15 @@ class Market extends React.Component{
             }
         };    
     }
+
+    componentDidUpdate(prevProps) {
+        console.log(this.props.newPlayer)
+        if(this.props.newPlayer !== prevProps.newPlayer) {
+            if(this.props.newPlayer.idPlatform == this.state.plataform) {
+                this.getWalletList(this.state.plataform, '0', '8', true, this.props.tela)
+            }
+        }
+    }
     
     componentDidMount(){
         this.props.lista.map(function(player) {

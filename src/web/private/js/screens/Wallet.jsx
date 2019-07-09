@@ -11,6 +11,7 @@ class Wallet extends React.Component{
             listaPlayers: [],
             inputPrice : null,
             idPlayerSelect : null,
+            novoPlayer: null,
         };   
     }
 
@@ -77,7 +78,26 @@ class Wallet extends React.Component{
                 error: (err) => { serverAns = err.responseJSON },
                 complete: () => {
                    console.log('addDataOnWallet -> ', serverAns);
-                   this.setState({lista:[]})
+                   this.setState({novoPlayer: serverAns.data})
+                   let serverAns2 = {};
+                    var count = 0;
+                    let dados = {
+                        "idPlayer": serverAns.data.idPlayer, //pegar
+                        "idPlatform": serverAns.data.idPlatform //pegar
+                    }
+                    $.ajax({
+                        url: '/player/getLastPrice',
+                        dataType: 'json',
+                        type: 'post',
+                        data: JSON.stringify(dados),
+                        contentType: 'application/json',
+                        success: (ans) => { serverAns2 = ans; },
+                        error: (err) => { serverAns2 = err.responseJSON },
+                        complete: () => {
+                            e.price = serverAns2.data.price;
+                            this.setState({lista: this.serverAns.data})
+                        }
+                    });
                 }
             });
         } else {
@@ -132,7 +152,7 @@ class Wallet extends React.Component{
                     
                 </div>
                 
-                <PlayersTable lista={this.state.lista} tela="carteira"></PlayersTable>
+                <PlayersTable lista={this.state.lista} newPlayer={this.state.novoPlayer} tela="carteira"></PlayersTable>
             </React.Fragment>
         )
     }
