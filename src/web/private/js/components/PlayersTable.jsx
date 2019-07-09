@@ -268,7 +268,7 @@ class Market extends React.Component{
         if(!this.state.lista || this.state.lista == null) {
             tableItens = <div className="loader"><Loader type="Triangle" color="#663ab5" height={80} width={80} /></div>
         } else if  (this.isEmpty(this.state.lista)){
-            tableItens = <div className="no-data-found">Reclama com o backend</div>
+            tableItens = <div className="no-data-found">Nenhum registro encontrado</div>
         }else if(this.state.lista && this.props.tela == 'mercado'){
             item1Tabela = '#';
             item2Tabela = 'Jogador';
