@@ -7,8 +7,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 class Market extends React.Component{
     constructor() {
         super();    
-        this.state = {plataform: 1, offsetInicial: 11, showMoreData: true, loaderButtonShowMore: false};    
+        this.state = {plataform: 1, offsetInicial: 11, showMoreData: true, loaderButtonShowMore: false, modal: {show:false, idPlayer: 'id', namePlayer: 'name'}};    
     }
+    
     componentDidMount(){
         this.props.lista.map(function(player) {
         })
@@ -21,7 +22,7 @@ class Market extends React.Component{
         if(tela == 'mercado') {
            this.getMarketList(idPlataform, offset, qtd, firstCharge);
         } else if (tela == 'carteira'){
-            this.getWalletList(idPlataform, offset, qtd, firstCharge)
+            this.getWalletList(idPlataform, offset, '20', firstCharge)
         }
     }
 
@@ -58,7 +59,7 @@ class Market extends React.Component{
     }
 
     
-    getLastPrice(player){
+    getLastPrice(player, callback){
         let serverAns = {};
         let dados = {
             "idPlayer": player.idPlayer, //pegar
@@ -73,11 +74,15 @@ class Market extends React.Component{
             success: (ans) => { serverAns = ans; },
             error: (err) => { serverAns = err.responseJSON },
             complete: () => {
-               console.log('getLatPrice -> ', serverAns);
+               callback(serverAns.data.price);
             }
         });
+        
     }
 
+    getPrice(price) {
+        return price;
+    }
 
     getWalletList(idPlataform, offset, qtd, firstCharge) {
         $.ajax({
@@ -86,7 +91,7 @@ class Market extends React.Component{
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify({
-                "idPlatform": 1 , //tu que passa
+                "idPlatform": this.state.plataform , //tu que passa
                 "offset": offset, // se não passa ele pegar a partir do 0
                 "qtd": qtd, //se não passar ele pega tudo, acho que pode ser assim pra não dar muito trabalho e tal   
             }),
@@ -94,7 +99,14 @@ class Market extends React.Component{
             error: (err) => { this.serverAns = err.responseJSON },
             complete: () => {
                 console.log('exemplo de getWallet -> ' ,this.serverAns.data)
-                this.setState({lista:this.serverAns.data});
+                this.serverAns.data.forEach((e, i) => {
+                    e.price = this.getLastPrice(e, this.getPrice);
+                    console.log(this.getLastPrice(e, this.getPrice))
+                    if(i == this.serverAns.data.length-1) {
+                        this.setState({lista: this.serverAns.data})
+                    }
+                });
+
                 if(firstCharge && idPlataform == 1) {
                     this.setState({xBoxLista:this.state.lista});
                 } else if(firstCharge && idPlataform == 2) {
@@ -106,11 +118,11 @@ class Market extends React.Component{
         });
     }
 
-    handleClick(id, index) {
-        if (document.getElementById(id).classList.contains('active')) {
-            document.getElementById(id).classList.remove('active')
+    handleClick(index) {
+        if (document.getElementById(index).classList.contains('active')) {
+            document.getElementById(index).classList.remove('active')
         }  else { 
-            document.getElementById(id).classList.add('active');
+            document.getElementById(index).classList.add('active');
             this.setState({renderChart: Math.random()})
             this.state.lista[index].show = true
             
@@ -178,9 +190,49 @@ class Market extends React.Component{
         this.getList(idPlataform, offset, qtde, firstCharge, tela);
     }
 
+    deleteDataWallet(id){
+        let serverAns = {};
+        let dados = {
+            "idBuy": id, //pegar da linha que ele escolheu editar, tu recebeu essa info no getMyWallet ali em cima
+        }
+        $.ajax({
+            url: '/user/deleteDataOnWallet',
+            dataType: 'json',
+            type: 'post',
+            data: JSON.stringify(dados),
+            contentType: 'application/json',
+            success: (ans) => { serverAns = ans; },
+            error: (err) => { serverAns = err.responseJSON },
+            complete: () => {
+               console.log('deleteDataWallet -> ', serverAns);
+               this.closeModal();
+               this.getWalletList(this.state.plataform, '0', '20', true, this.props.tela)
+            }
+        });
+    }
+
+    closeModal(){
+        let modalInfo = {
+            show: false,
+        }
+        this.setState({modal: modalInfo})
+    }
+
+    deleteDataWalletModal(e, id, name){
+        let modalInfo = {
+            show: true,
+            idPlayer: id,
+            namePlayer: name
+        }
+        this.setState({modal: modalInfo})
+        e.stopPropagation();
+        
+    }
     
     render(){
         console.log('rende table ', this.props.tela);
+        let letModal = '';
+        let letModalClass;
         let tableItens;
         let showMoreDataButton;
         let ps4Class = 'ps4-option';
@@ -216,8 +268,8 @@ class Market extends React.Component{
 
             tableItens =<div>{(this.state.lista || []).map((object, index) => (
                 
-                <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
-                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
+                <div key={object.idPlayer} id={index}  className="table-line-body">
+                    <div className="top-line-body" onClick={() => this.handleClick(index)}>
                         <div className="column-number" title={object.idPlayer}><span>{object.idPlayer}</span></div>
                         <div className="column-player">
                             <img className="img-player" src="/assets/bola.png" alt="img player"/>
@@ -230,7 +282,7 @@ class Market extends React.Component{
                         <div className="icon">^</div>
                         </div>
                     <div className="chart-space">
-                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={object.idPlayer+'b'}></SimpleChart> 
+                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={index+'b'}></SimpleChart> 
                     </div>
                 </div>
               )
@@ -256,11 +308,23 @@ class Market extends React.Component{
             item4Tabela = 'Preço pago';
             item5Tabela = '';
             item6Tabela = 'Variação (24h)';
+
+            letModalClass = 'modal-teste'
+            if(this.state.modal.show) {
+                letModalClass = 'modal-teste active'
+            }
+            letModal = <div className={letModalClass}>
+                <span>Tem certeza que deseja remover o jogador <span className="span-name-player">{this.state.modal.namePlayer}</span>?</span>
+                 <div className="modal-buttons">
+                    <div onClick={()=> this.deleteDataWallet(this.state.modal.idPlayer)} className="modal-sim">Sim!</div> 
+                    <div onClick={()=> this.closeModal()} className="modal-nao">Não</div>
+                 </div>
+            </div>
             
             tableItens =<div>{(this.state.lista || []).map((object, index) => (
                 
-                <div key={object.idPlayer} id={object.idPlayer}  className="table-line-body">
-                    <div className="top-line-body" onClick={() => this.handleClick(object.idPlayer, index)}>
+                <div key={object.idPlayer} id={index}  className="table-line-body">
+                    <div className="top-line-body" onClick={() => this.handleClick(index)}>
                         <div className="column-number" title={object.idPlayer}><span>{object.idPlayer}</span></div>
                         <div className="column-player">
                             <img className="img-player" src="/assets/bola.png" alt="img player"/>
@@ -270,10 +334,11 @@ class Market extends React.Component{
                         <div className="column-actual-price"><span>R$</span></div>
                         <div className="column-price"><span>R${object.userPrice.toLocaleString("pt-BR")}</span></div>
                         {this.getVariationWallet(object.variationLowPrice)}
-                        <div className="icon">^</div>
+                        <div className="icon icon-wallet">^</div>
+                        <div className="remove-compra" onClick={(e) => this.deleteDataWalletModal(e, object.idBuy, object.name)}>Deletar</div>
                         </div>
                     <div className="chart-space">
-                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={object.idPlayer+'b'}></SimpleChart> 
+                        <SimpleChart show={this.state.lista[index].show} playerId={object.idPlayer} chartId={index+'b'}></SimpleChart> 
                     </div>
                 </div>
               )
@@ -306,6 +371,7 @@ class Market extends React.Component{
                         {tableItens}
                         {showMoreDataButton}
                     </div>
+                    {letModal}
                 </div>
             </React.Fragment>
         )

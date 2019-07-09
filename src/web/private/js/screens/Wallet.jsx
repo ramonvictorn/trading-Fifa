@@ -56,44 +56,43 @@ class Wallet extends React.Component{
     }
 
     addRegistroWallet(){
-        let serverAns = {};
-        let dados = {
-            idPlatform:1, //pegar,
-            idPlayer: 2, //pegar do state select,
-            price :2500 //pegar do input
-        }
-        $.ajax({
-            url: '/user/addDataOnWallet',
-            dataType: 'json',
-            type: 'post',
-            data: JSON.stringify(dados),
-            contentType: 'application/json',
-            success: (ans) => { serverAns = ans; },
-            error: (err) => { serverAns = err.responseJSON },
-            complete: () => {
-               console.log('GET ALL PLAYERS -> ', serverAns);
+        let id = document.getElementById("testeselect").value;
+        let price = document.getElementById("priceplayer").value;
+        let plataforma = document.getElementById("Plataforma").value;
+
+        if(id && plataforma && price) {
+            let serverAns = {};
+            let dados = {
+                idPlatform: plataforma, //pegar,
+                idPlayer: id, //pegar do state select,
+                price : price //pegar do input
             }
-        });
+           
+            $.ajax({
+                url: '/user/addDataOnWallet',
+                dataType: 'json',
+                type: 'post',
+                data: JSON.stringify(dados),
+                contentType: 'application/json',
+                success: (ans) => { serverAns = ans; },
+                error: (err) => { serverAns = err.responseJSON },
+                complete: () => {
+                   console.log('GET ALL PLAYERS -> ', serverAns);
+                }
+            });
+        } else {
+            if(!id) {
+                alert("Selecione um jogador!")
+            } else if(!price) {
+                alert("Adicione um preço!")
+            }  else if(!plataforma) {
+                alert("Selecione a plataforma!")
+            }
+        }
+        
     }
 
-    deleteDataWallet(){
-        let serverAns = {};
-        let dados = {
-            "idBuy": 1, //pegar da linha que ele escolheu editar, tu recebeu essa info no getMyWallet ali em cima
-        }
-        $.ajax({
-            url: '/user/deleteDataOnWallet',
-            dataType: 'json',
-            type: 'post',
-            data: JSON.stringify(dados),
-            contentType: 'application/json',
-            success: (ans) => { serverAns = ans; },
-            error: (err) => { serverAns = err.responseJSON },
-            complete: () => {
-               console.log('deleteDataWallet -> ', serverAns);
-            }
-        });
-    }
+    
     // usar o price e o last price nessa função
     getPercentagem(price,priceReference){
         return parseFloat((((price / priceReference) - 1) * 100).toFixed(2))
@@ -107,15 +106,31 @@ class Wallet extends React.Component{
     render(){
         console.log('Wallet render' );
         // this.getMyWallet()
+        let optionSelect = [];
+        let arrayData = this.state.listaPlayers || [];
+        let players = arrayData.map((ele,index)=>{
+            optionSelect.push(<option className="opt" key={index} value={ele.idPlayer}>{ele.name}</option>)
+        })
         return(
             // campos da tabela = jogador , preço pago, preço atual variação
             <React.Fragment>
                 <PageNavigation cbSetState={this.props.cbSetState}></PageNavigation>
-                <button onClick={()=>this.addRegistroWallet()}>ADICIONAR REGISTRO</button>
-                Selecione um jogador:
-                <ChoicePlayer listaPlayers={this.state.listaPlayers}></ChoicePlayer>
-                Preço pago:
-                <input></input>
+                <div className="add-player">
+                    <button onClick={()=>this.addRegistroWallet()}>ADICIONAR REGISTRO</button>
+                    <span className="add-player-span">Selecione um jogador:</span>
+                    <select id="testeselect" className="drop" name="choicePlayer">
+                        {optionSelect}
+                    </select>
+                    <span className="add-player-span">Selecione a plataforma:</span>
+                    <select id="Plataforma" className="drop" name="choicePlayer">
+                        <option value="1">XBOX</option>
+                        <option value="2">PS4</option>
+                        <option value="3">PC</option>
+                    </select>
+                    <span className="add-player-span">Preço pago:</span>
+                    <input id="priceplayer" className="input-custom" type="number"></input>
+                </div>
+                
                 <PlayersTable lista={this.state.lista} tela="carteira"></PlayersTable>
             </React.Fragment>
         )

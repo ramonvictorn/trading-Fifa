@@ -219,3 +219,123 @@ h1 {
 .show-more-data-btn:hover {
   background-color: #6131ad;
 }
+
+.add-player {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+}
+.input-custom:focus {
+  border: none;
+}
+.input-custom {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-bottom: 1px solid #6131ad;
+}
+
+.add-player-span{
+  color: white;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.drop{
+  margin-right: 10px;
+}
+
+ 
+.remove-compra {
+  color: red!important;
+  position: absolute;
+  right: 20px;
+  top: 38px;
+}
+
+.remove-compra:hover{
+  color: #b95d5d!important;
+}
+.active .icon.icon-wallet {
+  top: 18px;
+}
+.icon.icon-wallet {
+  top: 10px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius: 16px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: #666;
+  -webkit-border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: #666;
+  -webkit-border-radius: 3px;
+}
+
+.modal-teste {
+  position: fixed;
+  top: calc(50% - 90px);
+  right: calc(50% - 250px);
+  width: 500px;
+  height: 180px;
+  display: none;
+}
+
+.modal-teste.active {
+  display: flex;
+  flex-direction: column;
+  background-color: #6131ad;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 10px;
+}
+
+.modal-buttons{
+  display: flex;
+  width: 150px;
+  margin-top: 30px;
+  justify-content: space-between;
+}
+
+.modal-nao,
+.modal-sim {
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.modal-sim:hover {
+  background-color: #942626;
+}
+
+.modal-nao:hover {
+  background-color: #4d9019;
+}
+
+.span-name-player{
+  color: red;
+}
