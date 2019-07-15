@@ -17,7 +17,7 @@ const PrivateRoute = ({component:Component, ...rest})=> {
     return (
         <Route {...rest} render={(props)=>(
             rest.isLogged === true
-            ? <Component {...props}/>
+            ? <Component {...rest}/>
             : <Redirect to='/login'/>
         )}/>
     )
@@ -32,7 +32,11 @@ class AppRoutes extends Component{
         super()
         this.state = {
             isLogged : null,
-        }
+        };
+        this.cbSetState = this.cbSetState.bind(this);
+    }
+    cbSetState(bool){
+        this.setState({isLogged:bool != undefined ? bool : null});
     }
     componentDidMount(){
         $.ajax({
@@ -57,13 +61,13 @@ class AppRoutes extends Component{
         if (isLogged == null) {
             return <div></div>
         }
-        console.log('appRoutes > ', this.state)
+        console.log('appRoutes > state', this.state)
         return(
             <Router>    
                 <Switch>
-                    <PrivateRoute path='/wallet' component={WalletView} isLogged={this.state.isLogged} history={history}/>
-                    <PrivateRoute path='/market' component={MarketView} isLogged={this.state.isLogged}/>
-                    <Route path='/' isLogged={'ramon'} component={(props)=> (<LoginView {...props} isLogged={isLogged}/>)}/>
+                    <PrivateRoute path='/Carteira' component={WalletView} cbSetState={this.cbSetState} isLogged={this.state.isLogged} history={history}/>
+                    <PrivateRoute path='/Mercado' component={MarketView} cbSetState={this.cbSetState} isLogged={this.state.isLogged}/>
+                    <Route path='/' component={(props)=> (<LoginView {...props} cbSetState={this.cbSetState} isLogged={isLogged}/>)}/>
                 </Switch>
             </Router>
         )

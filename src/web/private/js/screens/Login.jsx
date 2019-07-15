@@ -5,18 +5,21 @@ import FormLogin from '../components/FormLogin.jsx';
 class Login extends Component{
     constructor(){
         super();
+        this.setLogged = this.setLogged.bind(this);
+    }
+     
+    setLogged(boll){
+        this.props.cbSetState(boll);
     }
     
-    
     render(){
-        console.log('render Login View', this.props);
         if(this.props.isLogged == true){
-            this.props.history.push('/market')
+            this.props.history.push('/Mercado')
         }
         return(
             <React.Fragment>
                 <div className="general-login">
-                    <FormLogin></FormLogin>
+                    <FormLogin callback={this.setLogged}></FormLogin>
                 </div>
             </React.Fragment>
         )

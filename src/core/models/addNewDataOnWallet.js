@@ -1,30 +1,29 @@
 const db = require('../../db.js')
-module.exports = addPlayer;
-function addPlayer(context,cb){
+module.exports = addNewDataOnWallet;
+function addNewDataOnWallet(context,cb){
     let queryInsert = ``;
     let queryValues = [
-        context.futbinId,
-        context.playerName,
-        context.details || {},
-        context.category || 'pattern',
+        context.idUser,
+        context.idPlayer,
+        context.idPlatform,
+        context.price,
     ];
    
-    let queryString = `INSERT INTO players 
-        (id_futbin,name,details,category,date_inserted) 
-    VALUES 
-        ($1,$2, $3,$4,now())
-    RETURNING 
-        id_futbin as "idFutbin",
-        id_player as "idPlayer",
-        name,
+    let queryString = `INSERT INTO
+            wallets (id_user,id_player,id_platform,price,date_inserted,details)
+        VALUES 
+        ($1,$2,$3,$4, now(),'{}') 
+        RETURNING 
+        id_buy as "idBuy",
+        id_user as "idUser",
+        id_platform as "idPlatform",
+        price,
         details,
-        category,
-        extract(epoch from date_inserted)*1000 as "dateInserted" ;`
+        date_inserted as "dateInserted";`;
 
     db.query(queryString, queryValues, (err,res)=>{   
         if(err){
-            cb({error:'ERROR_ON_ADD_PLAYER'})
-            return true;
+            cb({error:'ERROR_ON_ADD_DATA_ON_WALLET'})
         }else{
             cb({data:res.rows[0]})
         }
