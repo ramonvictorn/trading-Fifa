@@ -33,7 +33,7 @@
     "crypto": "^1.0.1",
     "css-loader": "^2.1.1",
     "echarts": "^4.2.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.16.1",
     "pg": "^7.10.0",
     "react": "^16.8.6",
